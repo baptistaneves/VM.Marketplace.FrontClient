@@ -1,0 +1,358 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Hero section -->
+<section class="bg-accent bg-position-top-center bg-repeat-0 py-5" style="background-image: url(assets/img/home/marketplace-hero.jpg)">
+    <div class="pb-lg-5 mb-lg-3">
+        <div class="container py-lg-5 my-lg-5">
+            <div class="row mb-4 mb-sm-5">
+                <div class="col-lg-7 col-md-9 text-center text-sm-start">
+                    <h1 class="text-white lh-base">
+                        <span class="fw-light">Over</span>
+                        1,500
+                        <span class="fw-light">curated</span>
+                        Design
+                        <span class="fw-light">resources</span>
+                        , Images,Graphic
+                        <span class="fw-light">&amp;</span>
+                        Website
+                        <span class="fw-light">templates</span>
+                    </h1>
+                    <h2 class="h5 text-white fw-light">
+                        High quality items created by our global community
+                    </h2>
+                </div>
+            </div>
+            <div class="row pb-lg-5 mb-4 mb-sm-5">
+                <div class="col-lg-6 col-md-8">
+                    <div ngbDropdown class="input-group input-group-lg flex-nowrap">
+                        <i class="ci-search position-absolute top-50 translate-middle-y ms-3"></i>
+                        <input class="form-control rounded-start" type="text" [(ngModel)]="searchTerm" placeholder="Start your search">
+                        <button class="btn btn-primary btn-lg dropdown-toggle fs-base" type="button" data-bs-toggle="dropdown" ngbDropdownToggle>
+                            {{ selectedcategory }}
+                        </button>
+                        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end my-1">
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('All categories')">
+                                All
+                                categories
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('Photos')">
+                                Photos
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('Graphics')">
+                                Graphics
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('UI Design')">
+                                UI
+                                Design
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('Web Themes')">
+                                Web
+                                Themes
+                            </a>
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="catchange('Add-Ons')">
+                                Add-Ons
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured products (Carousel) -->
+<section class="container position-relative pt-3 pt-lg-0 pb-5 mt-lg-n10" style="z-index: 10">
+    <div class="card px-lg-2 border-0 shadow-lg">
+        <div class="card-body px-4 pt-5 pb-4">
+            <h2 class="h3 text-center">Discover featured products</h2>
+            <p class="text-muted text-center">
+                Every week we hand-pick some of the best items from our collection
+            </p>
+            <!-- Carousel -->
+            <div class="tns-carousel pt-4">
+                <ngx-slick-carousel [config]="config">
+                    @for(feature of featureproduct;track $index){
+                    <div class="swiper-slide card product-card-alt" ngxSlickItem>
+                        <div class="product-thumb">
+                            <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist" (click)="fetureaddfavorite($index)">
+                                <i class="ci-heart"></i>
+                            </button>
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" routerLink="/single" ngbTooltip="view">
+                                    <i class="ci-eye"></i>
+                                </a>
+                                <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart" (click)="addcart($index)">
+                                    <i class="ci-cart"></i>
+                                </button>
+                            </div>
+                            <a class="product-thumb-overlay" routerLink="/single"></a>
+                            <img src="{{ feature.image }}" alt="Product">
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                                <div class="text-muted fs-xs me-1">
+                                    by
+                                    <a class="product-meta fw-medium" href="javascript:void(0)">
+                                        {{ feature.by }}
+                                    </a>
+                                    in
+                                    <a class="product-meta fw-medium" href="javascript:void(0)">
+                                        {{ feature.in }}
+                                    </a>
+                                </div>
+                                <div class="star-rating me-2">
+                                    <ng-template #t let-fill="fill">
+                                        <span class="rstar" [class.full]="fill === 100">
+                                            <span class="rhalf" [style.width.%]="fill">
+                                                ★
+                                            </span>
+                                            ☆
+                                        </span>
+                                    </ng-template>
+                                    <ngb-rating class="d-inline-flex stars align-middle star-rating" [(rate)]="feature.rate" [starTemplate]="t" [readonly]="true" [max]="5">
+                                    </ngb-rating>
+                                </div>
+                            </div>
+                            <h3 class="product-title fs-sm mb-2">
+                                <a href="javascript:void(0)">{{ feature.title }}</a>
+                            </h3>
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="fs-sm me-2">
+                                    <i class="ci-download text-muted me-1"></i>
+                                    {{ feature.sale
+                                    }}
+                                    <span class="fs-xs ms-1">Sales</span>
+                                </div>
+                                <div class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{ feature.price
+                                    }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Recent products grid -->
+<section class="container pb-5 mb-lg-3">
+    <!-- Heading -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+        <h2 class="h3 mb-0 pt-3 me-2">The most recent releases</h2>
+        <div class="pt-3">
+            <select class="form-select me-2">
+                <option>All categories</option>
+                <option>Photos</option>
+                <option>Graphics</option>
+                <option>UI Design</option>
+                <option>Web Themes</option>
+                <option>Fonts</option>
+                <option>Add-Ons</option>
+            </select>
+        </div>
+    </div>
+    <!-- Grid -->
+    <div class="row pt-2 mx-n2">
+        <!-- Product -->
+        @for(recent of recentproduct;track $index){
+        <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter">
+            <div class="card product-card-alt">
+                <div class="product-thumb">
+                    <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist" (click)="recentaddfavorite($index)">
+                        <i class="ci-heart"></i>
+                    </button>
+                    <div class="product-card-actions">
+                        <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="javascript:void(0)" ngbTooltip="view">
+                            <i class="ci-eye"></i>
+                        </a>
+                        <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart">
+                            <i class="ci-cart"></i>
+                        </button>
+                    </div>
+                    <a class="product-thumb-overlay" href="javascript:void(0)"></a>
+                    <img src="{{ recent.image }}" alt="Product">
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                        <div class="text-muted fs-xs me-1">
+                            by
+                            <a class="product-meta fw-medium" href="javascript:void(0)">
+                                {{ recent.by }}
+                            </a>
+                            in
+                            <a class="product-meta fw-medium" href="javascript:void(0)">
+                                {{
+                                recent.in
+                                }}
+                            </a>
+                        </div>
+                        <div class="star-rating me-2">
+                            <ng-template #t let-fill="fill">
+                                <span class="rstar" [class.full]="fill === 100">
+                                    <span class="rhalf" [style.width.%]="fill">
+                                        ★
+                                    </span>
+                                    ☆
+                                </span>
+                            </ng-template>
+                            <ngb-rating class="d-inline-flex stars align-middle star-rating" [(rate)]="currentRate" [starTemplate]="t" [readonly]="true" [max]="5">
+                            </ngb-rating>
+                        </div>
+                    </div>
+                    <h3 class="product-title fs-sm mb-2">
+                        <a href="javascript:void(0)">{{ recent.title }}</a>
+                    </h3>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="fs-sm me-2">
+                            <i class="ci-download text-muted me-1"></i>
+                            {{ recent.sale
+                            }}
+                            <span class="fs-xs ms-1">Sales</span>
+                        </div>
+                        <div class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">${{ recent.price }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <!-- More button -->
+    <div class="text-center">
+        <a class="btn btn-outline-accent" href="javascript:void(0)" routerLink="/category">
+            View more products
+            <i class="ci-arrow-right fs-ms ms-1"></i>
+        </a>
+    </div>
+</section>
+<!-- Seller of the month -->
+<section class="border-top py-5">
+    <div class="container py-lg-2">
+        <h2 class="h3 mb-3 pb-3 pb-lg-4 text-center text-lg-start">Seller of the month</h2>
+        <div class="row">
+            <div class="col-lg-4 text-center text-lg-start pb-3 pt-lg-2">
+                <div class="d-inline-block text-start">
+                    <div class="d-flex align-items-center pb-3">
+                        <div class="img-thumbnail rounded-circle flex-shrink-0" style="width: 6.375rem">
+                            <img class="rounded-circle" src="assets/img/marketplace/account/avatar.png" alt="Themesbrand">
+                        </div>
+                        <div class="ps-3">
+                            <h3 class="fs-lg mb-0">Themesbrand</h3>
+                            <span class="d-block text-muted fs-ms pt-1 pb-2">Member since November 2019</span>
+                            <a class="btn btn-primary btn-sm" href="javascript:void(0)" routerLink="/vendor">
+                                View
+                                products
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <!-- Product -->
+                <ngx-slick-carousel [config]="seller">
+                    @for(seller of sellerproduct;track $index){
+                    <div class="swiper-slide card product-card-alt" ngxSlickItem>
+                        <div class="card product-card-alt">
+                            <div class="product-thumb">
+                                <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist" (click)="selleraddfavorite($index)">
+                                    <i class="ci-heart"></i>
+                                </button>
+                                <div class="product-card-actions">
+                                    <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="javascript:void(0)" ngbTooltip="view">
+                                        <i class="ci-eye"></i>
+                                    </a>
+                                    <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart">
+                                        <i class="ci-cart"></i>
+                                    </button>
+                                </div>
+                                <a class="product-thumb-overlay" href="javascript:void(0)"></a>
+                                <img src="{{ seller.image }}" alt="Product">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="product-title fs-sm mb-2">
+                                    <a href="javascript:void(0)">{{ seller.title }}</a>
+                                </h3>
+                                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="fs-sm me-2">
+                                        <i class="ci-download text-muted me-1"></i>
+                                        {{ seller.sale }}
+                                        <span class="fs-xs ms-1">Sales</span>
+                                    </div>
+                                    <div class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">${{
+                                        seller.price }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Marketplace features -->
+<section class="bg-accent bg-size-cover bg-position-center pt-5 pb-4 pb-lg-5" style="background-image: url(assets/img/marketplace/features/features-bg.jpg)">
+    <div class="container pt-lg-3">
+        <h2 class="h3 mb-3 pb-4 text-light text-center">Why our marketplace?</h2>
+        <div class="row pt-lg-2 text-center">
+            @for(service of services;track $index){
+            <div class="col-lg-3 col-sm-6 mb-grid-gutter">
+                <div class="d-inline-flex align-items-center text-start">
+                    <img src="{{ service.image }}" width="52" alt="Quality Guarantee">
+                    <div class="ps-3">
+                        <h6 class="text-light fs-base mb-1">{{ service.title }}</h6>
+                        <p class="text-light fs-ms opacity-70 mb-0">{{ service.sub_title }}</p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Blog posts carousel -->
+<section class="py-5">
+    <div class="container py-lg-3">
+        <h2 class="h3 text-center">From the blog</h2>
+        <p class="text-muted text-center mb-3 pb-4">
+            Latest marketplace news, success stories and tutorials
+        </p>
+        <ngx-slick-carousel [config]="blog">
+            @for(blog of blogproduct;track $index){
+            <div class="swiper-slide card product-card-alt" ngxSlickItem>
+                <div>
+                    <div class="card">
+                        <a class="blog-entry-thumb" href="javascript:void(0)">
+                            <img class="card-img-top" src="{{ blog.image }}" alt="Post">
+                        </a>
+                        <div class="card-body">
+                            <h2 class="h6 blog-entry-title">
+                                <a href="javascript:void(0)">{{ blog.title }}</a>
+                            </h2>
+                            <p class="fs-sm">{{ blog.content }}</p>
+                            <div class="fs-xs text-nowrap">
+                                <a class="blog-entry-meta-link text-nowrap" href="javascript:void(0)">
+                                    {{ blog.date
+                                    }}
+                                </a>
+                                <span class="blog-entry-meta-divider mx-2"></span>
+                                <a class="blog-entry-meta-link text-nowrap" href="javascript:void(0)">
+                                    <i class="ci-message"></i>
+                                    {{ blog.comment }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </ngx-slick-carousel>
+        <div class="text-center pt-4 mt-md-2">
+            <a class="btn btn-outline-accent" href="javascript:void(0)">
+                Ream more posts
+                <i class="ci-arrow-right fs-ms ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<app-footer></app-footer>

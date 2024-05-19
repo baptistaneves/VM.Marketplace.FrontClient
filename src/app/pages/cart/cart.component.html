@@ -1,0 +1,100 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Page Title -->
+<div class="page-title-overlap bg-accent pt-4">
+    <app-breadcrumbs title="Your cart" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+</div>
+
+<!-- Content -->
+<div class="container mb-5 pb-3">
+    <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+            <!-- Content -->
+            <section class="col-lg-8 pt-2 pt-lg-4 pb-4 mb-3">
+                <div class="pt-2 px-4 pe-lg-0 ps-xl-5">
+                    <!-- Header -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3">
+                        <div class="py-1">
+                            <a class="btn btn-outline-accent btn-sm" href="javascript:void(0)" routerLink="/category">
+                                <i class="ci-arrow-left me-1 ms-n1"></i>
+                                Back to shopping
+                            </a>
+                        </div>
+                        <div class="d-none d-sm-block py-1 fs-sm">
+                            You have {{ carts.length }} products in your cart
+                        </div>
+                        <div class="py-1">
+                            <a class="btn btn-outline-danger btn-sm" href="javascript:void(0)" (click)="clearcart()">
+                                <i class="ci-close fs-xs me-1 ms-n1"></i>
+                                Clear cart
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Product -->
+                    @for(cart of carts;track $index){
+                    <div class="d-block d-sm-flex align-items-center py-4 border-bottom">
+                        <a class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" href="javascript:void(0)" style="width: 12.5rem">
+                            <img class="rounded-3" src="{{ cart.image }}" alt="Product">
+                            <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2" data-bs-toggle="tooltip" title="Remove from Favorites">
+                                <i class="ci-trash" (click)="removecart($index)"></i>
+                            </span>
+                        </a>
+                        <div class="text-center text-sm-start">
+                            <h3 class="h6 product-title mb-2">
+                                <a href="javascript:void(0)">{{ cart.title }}</a>
+                            </h3>
+                            <div class="d-inline-block text-accent">${{ cart.price }}</div>
+                            <a class="d-inline-block text-accent fs-ms border-start ms-2 ps-2" href="javascript:void(0)">
+                                by {{ cart.by }}
+                            </a>
+                            <div class="form-inline pt-2">
+                                <select class="form-select form-select-sm my-1 me-2">
+                                    <option>Standard license</option>
+                                    <option>Extended license</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </section>
+            <!-- Sidebar -->
+            <aside class="col-lg-4 ps-xl-5">
+                <hr class="d-lg-none">
+                <div class="p-4 h-100 ms-auto border-start">
+                    <div class="px-lg-2">
+                        <div class="text-center mb-4 py-3 border-bottom">
+                            <h2 class="h6 mb-3 pb-1">Cart total</h2>
+                            <h3 class="fw-normal">${{ total }}</h3>
+                        </div>
+                        <div class="text-center mb-4 pb-3 border-bottom">
+                            <h2 class="h6 mb-3 pb-1">Promo code</h2>
+                            <form class="needs-validation pb-2" method="post" novalidate [formGroup]="reviewForm" (ngSubmit)="reviewSubmit()">
+                                <div class="mb-3">
+                                    <input class="form-control" type="text" placeholder="Promo code" formControlName="promocode" [ngClass]="{
+                      'is-invalid': rsubmit && rform['promocode'].errors
+                    }">
+                                    <div class="invalid-feedback">Please provide promo code.</div>
+                                </div>
+                                <button class="btn btn-secondary d-block w-100" type="submit">
+                                    Apply promo code
+                                </button>
+                            </form>
+                        </div>
+                        <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="javascript:void(0)" routerLink="/checkout">
+                            <i class="ci-locked fs-lg me-2"></i>
+                            Secure Checkout
+                        </a>
+                        <div class="text-center pt-2 pb-3">
+                            <small class="text-form text-muted">100% money back guarantee</small>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

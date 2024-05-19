@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+.slick-initialized {
+    .slick-slide {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+}
+
+
+.slick-dots li.slick-active button:before {
+    content: '';
+    display: inline-block;
+    height: 0.3125rem;
+    margin: 0 0.375rem;
+    padding: 0;
+    margin-top: 30px;
+    transition: width .2s ease-in-out, background-color .2s ease-in-out;
+    border: 0;
+    border-radius: 0.15625rem;
+    width: 1.25rem;
+    background-color: #fe696a;
+}
+
+.slick-dots li button:before {
+    content: '';
+    display: inline-block;
+    width: 0.3125rem;
+    height: 0.3125rem;
+    margin: 0 0.375rem;
+    margin-top: 30px;
+    padding: 0;
+    transition: width .2s ease-in-out, background-color .2s ease-in-out;
+    border: 0;
+    border-radius: 0.15625rem;
+    background-color: #1d2229;
+}

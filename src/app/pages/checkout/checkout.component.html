@@ -1,0 +1,299 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Page Title -->
+<div class="page-title-overlap bg-accent pt-4">
+    <app-breadcrumbs title="Checkout" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+</div>
+
+<!-- Content -->
+<div class="container mb-5 pb-3">
+    <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+            <!-- Content -->
+            <section class="col-lg-8 pt-2 pt-lg-4 pb-4 mb-3">
+                <div class="pt-2 px-4 pe-lg-0 ps-xl-5">
+                    <!-- Title -->
+                    <h2 class="h6 border-bottom pb-3 mb-3">Billing details</h2>
+                    <!-- Billing detail -->
+                    <form method="post" novalidate [formGroup]="billingForm" (ngSubmit)="billSubmit()">
+                        <div class="row pb-4 gx-4 gy-3">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="mc-fn">
+                                    First name
+                                    <span class='text-danger'>*</span>
+                                </label>
+                                <input class="form-control" type="text" value="Jonathan" formControlName="firstname" [ngClass]="{ 'is-invalid': bsubmit && rform['firstname'].errors }" id="mc-fn">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="mc-ln">
+                                    Last name
+                                    <span class='text-danger'>*</span>
+                                </label>
+                                <input class="form-control" type="text" value="Doe" formControlName="lastname" [ngClass]="{ 'is-invalid': bsubmit && rform['lastname'].errors }" id="mc-ln">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="mc-email">
+                                    Email address
+                                    <span class='text-danger'>*</span>
+                                </label>
+                                <input class="form-control" type="email" value="contact@themesbrand" formControlName="email" [ngClass]="{ 'is-invalid': bsubmit && rform['email'].errors }" id="mc-email">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="mc-company">
+                                    Company
+                                </label>
+                                <input class="form-control" type="text" value="Themesbrand" formControlName="company" [ngClass]="{ 'is-invalid': bsubmit && rform['company'].errors }" id="mc-company">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="mc-country">
+                                    Country
+                                    <span class='text-danger'>*</span>
+                                </label>
+                                <select class="form-select" id="mc-country" formControlName="country" [ngClass]="{ 'is-invalid': bsubmit && rform['country'].errors }">
+                                    <option value>Select country</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Belgium">Belgium</option>
+                                    <option value="France">France</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Madagascar" selected>
+                                        Madagascar
+                                    </option>
+                                    <option value="Spain">Spain</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="USA">USA</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Order preview on mobile (screens small than 991px) -->
+                    <div class="widget mb-3 d-lg-none">
+                        <h2 class="widget-title">Order summary</h2>
+                        <div class="d-flex align-items-center pb-2 border-bottom">
+                            <a class="d-block flex-shrink-0 me-2" href="javascript:void(0)">
+                                <img class="rounded-1" src="assets/img/marketplace/products/widget/01.jpg" width="64" alt="Product">
+                            </a>
+                            <div class="ps-1">
+                                <h6 class="widget-product-title">
+                                    <a href="javascript:void(0)">
+                                        UI Isometric Devices
+                                        Pack
+                                    </a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent border-end pe-2 me-2">
+                                        $23.
+                                        <small>99</small>
+                                    </span>
+                                    <span class="fs-xs text-muted">Standard license</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center py-2 border-bottom">
+                            <a class="d-block flex-shrink-0 me-2" href="javascript:void(0)">
+                                <img class="rounded-1" src="assets/img/marketplace/products/widget/02.jpg" width="64" alt="Product">
+                            </a>
+                            <div class="ps-1">
+                                <h6 class="widget-product-title">
+                                    <a href="javascript:void(0)">
+                                        Project Devices
+                                        Showcase
+                                    </a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent border-end pe-2 me-2">
+                                        $18.
+                                        <small>99</small>
+                                    </span>
+                                    <span class="fs-xs text-muted">Standard license</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center py-2 border-bottom">
+                            <a class="d-block flex-shrink-0 me-2" href="javascript:void(0)">
+                                <img class="rounded-1" src="assets/img/marketplace/products/widget/03.jpg" width="64" alt="Product">
+                            </a>
+                            <div class="ps-1">
+                                <h6 class="widget-product-title">
+                                    <a href="javascript:void(0)">
+                                        Gravity Devices UI
+                                        Mockup
+                                    </a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent border-end pe-2 me-2">
+                                        $15.
+                                        <small>99</small>
+                                    </span>
+                                    <span class="fs-xs text-muted">Standard license</span>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled fs-sm py-3">
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span class="me-2">Subtotal:</span>
+                                <span class="text-end">
+                                    $58.
+                                    <small>97</small>
+                                </span>
+                            </li>
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span class="me-2">Taxes:</span>
+                                <span class="text-end">
+                                    $10.
+                                    <small>45</small>
+                                </span>
+                            </li>
+                            <li class="d-flex justify-content-between align-items-center fs-base">
+                                <span class="me-2">Total:</span>
+                                <span class="text-end">
+                                    $69.
+                                    <small>42</small>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Payment methods accordion -->
+                    <div ngbAccordion #acc="ngbAccordion" [closeOthers]="true" activeIds="static-1">
+                        <div ngbAccordionItem id="static-1">
+                            <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                <i class="ci-card fs-lg me-2 mt-n1 align-middle"></i>
+                                Pay
+                                with Credit Card
+                            </button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                        <p class="fs-sm">
+                                            We accept following credit cards:&nbsp;&nbsp;
+                                            <img class="d-inline-block align-middle" src="assets/img/cards.png" style="width: 187px;" alt="Cerdit Cards">
+                                        </p>
+                                        <form class="credit-card-form row g-3">
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="text" placeholder="Card Number" required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="text" placeholder="Full Name" required>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input class="form-control" type="text" placeholder="MM/YY" required>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input class="form-control" type="text" placeholder="CVC" required>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button class="btn btn-primary d-block w-100" type="submit">
+                                                    Place order
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div ngbAccordionItem id="static-2">
+                            <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                <i class="ci-paypal me-2 align-middle"></i>
+                                Pay with PayPal
+                                </button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                    <p>
+                                        <span class='fw-medium'>PayPal</span>
+                                        - the safer, easier way to pay
+                                    </p>
+                                    <button class="btn btn-primary" type="button">
+                                        Checkout with PayPal
+                                    </button>
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                        <div ngbAccordionItem id="static-3">
+                            <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                <i class="ci-money-bag me-2"></i>
+                                Pay with my account balance
+                                </button>
+                            </h2>
+                            <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                    <ng-template>
+                                        <p>
+                                            You currently have
+                                            <span class="fw-medium">
+                                                &nbsp;$1,375.
+                                                <small>00</small>
+                                            </span>
+                                            &nbsp;on your
+                                            account balance.
+                                        </p>
+                                        <button class="btn btn-primary" type="submit">
+                                            Pay with account balance
+                                        </button>   
+                                    </ng-template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Sidebar -->
+            <!-- Order preview on desktop (screens larger than 991px) -->
+            <aside class="col-lg-4 d-none d-lg-block ps-xl-5">
+                <hr class="d-lg-none">
+                <div class="p-4 h-100 ms-auto border-start">
+                    <div class="widget px-lg-2 py-2 mb-3">
+                        <h2 class="widget-title text-center">Order summary</h2>
+                        @for(cart of orders;track $index){
+                        <div class="d-flex align-items-center pb-2 border-bottom">
+                            <a class="d-block flex-shrink-0 me-2" routerLink="/single">
+                                <img class="rounded-1" src="{{cart.image}}" width="64" alt="Product">
+                            </a>
+                            <div class="ps-1">
+                                <h6 class="widget-product-title">
+                                    <a routerLink="/single">
+                                        {{cart.title}}
+                                    </a>
+                                </h6>
+                                <div class="widget-product-meta">
+                                    <span class="text-accent border-end pe-2 me-2 price">
+                                        ${{cart.price}}
+                                    </span>
+                                    <span class="fs-xs text-muted">Standard license</span>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        <ul class="list-unstyled fs-sm pt-3 pb-2 border-bottom">
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span class="me-2">Subtotal:</span>
+                                <span class="text-end price">
+                                    ${{subtotal}}
+                                </span>
+                            </li>
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span class="me-2">Taxes:</span>
+                                <span class="text-end price">
+                                    ${{total}}
+                                </span>
+                            </li>
+                        </ul>
+                        <h3 class="fw-normal text-center my-4 price">
+                            ${{total}}
+                        </h3>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>
