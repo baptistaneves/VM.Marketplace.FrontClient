@@ -6,6 +6,12 @@ import { Router } from '@angular/router';
 import { feature, seller, service, blog, recent } from './data';
 import { cart } from '../../cart/data';
 import { favorites } from '../../account/favorites/data';
+import { CategoryService } from 'src/app/services/categories/category.service';
+import { Category } from 'src/app/models/categories/category';
+import { environment } from 'src/environments/environment';
+import { ProductDto } from 'src/app/models/products/productDto';
+import { ProductService } from 'src/app/services/products/product.service';
+import { ProductFilter } from 'src/app/models/products/productFilter';
 
 @Component({
   selector: 'app-index',
@@ -24,7 +30,17 @@ export class IndexComponent implements OnInit {
   selectedcategory: any;
   searchTerm: any;
 
-  constructor(public router: Router) { }
+  categories: Category[];
+  productsDto: ProductDto[];
+  productFilter = new ProductFilter();
+
+  categoryImageUrlStaticFile: string = environment.apiUrlCategoryStaticFilesv1;
+  productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
+
+  constructor(public router: Router,
+              private categoryService: CategoryService,
+              private productService: ProductService
+              ) { }
 
   ngOnInit(): void {
 
@@ -38,13 +54,20 @@ export class IndexComponent implements OnInit {
     this.blogproduct = blog;
     this.recentproduct = recent;
 
-    //set decimal point to small
-    setTimeout(() => {
-      document.querySelectorAll('.price').forEach((e) => {
-        let txt = e.innerHTML.split('.');
-        e.innerHTML = txt[0] + '.<small>' + txt[1] + '</small>';
-      });
-    }, 0);
+    this.listCategories();
+    this.listProducts(this.productFilter);
+  }
+
+  listProducts(filter: ProductFilter) {
+    this.productService.getAll(filter).subscribe(response => {
+      this.productsDto = response.data.items;
+    })
+  }
+
+  listCategories() {
+    this.categoryService.getAll().subscribe(response => {
+      this.categories = response.data;
+    })
   }
 
   /**
@@ -146,5 +169,21 @@ export class IndexComponent implements OnInit {
 
   catchange(category: any) {
     this.selectedcategory = category;
+  }
+
+  teste() {
+    
+    // set decimal point to small and adjust to Angolan Kwanza format
+    setTimeout(() => {
+      document.querySelectorAll(".price").forEach((e) => {
+        let txt = e.innerHTML.split(".")
+        let wholePart = txt[0];
+        let decimalPart = txt.length > 1 ? txt[1] : '00'; // handling cases where there might be no decimal part
+        // Format the number with commas for thousand separators
+        wholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        // Combine whole part and decimal part with Angolan Kwanza symbol
+        e.innerHTML = wholePart + "." + decimalPart + " AOA";
+      });
+    }, 0);
   }
 }

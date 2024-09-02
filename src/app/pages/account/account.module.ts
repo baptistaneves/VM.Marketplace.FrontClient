@@ -11,6 +11,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { SettingComponent } from './setting/setting.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { AccountGuard } from 'src/app/guards/account.guard';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,11 @@ import { FavoritesComponent } from './favorites/favorites.component';
     NgbRatingModule,
     NgbTooltipModule,
     AccountRoutingModule,
+    NgxDropzoneModule,
     SharedModule,
+  ],
+  providers: [
+    AccountGuard
   ]
 })
 export class AccountModule { }

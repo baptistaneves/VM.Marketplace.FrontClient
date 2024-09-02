@@ -4,6 +4,10 @@ import { category } from './data';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
+import { SignmodalComponent } from '../signmodal/signmodal.component';
+import { LocalStorageUtils } from 'src/app/utils/localStorageUtils';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -28,9 +32,18 @@ export class HeaderComponent implements OnInit {
   SignupForm!: UntypedFormGroup;
   submit = false;
 
-  constructor(private modalService: NgbModal, private formBuilder: UntypedFormBuilder) { }
+  public LocalStorage = new LocalStorageUtils();
+  loggedInUser:any;
+
+
+  constructor(
+    private modalService: NgbModal, 
+    private formBuilder: UntypedFormBuilder,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.loggedInUser = this.LocalStorage.getUser();
+
     this.allcategories = category;
     this.cartproduct = cart;
 
@@ -120,10 +133,24 @@ export class HeaderComponent implements OnInit {
   }
 
   /**
+    * Open modal
+    */
+  openModal() {
+    // this.submitted = false;
+    this.modalService.open(SignmodalComponent, { size: 'md', centered: true });
+  }
+
+
+  /**
   * Password Hide/Show
   */
   togglesignupCPassfield() {
     this.signupCPassfield = !this.signupCPassfield;
+  }
+
+  logOut() {
+    this.LocalStorage.cleanLocalUserData();
+    this.router.navigate(['/']);
   }
 
 }

@@ -1,0 +1,189 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Page Title -->
+<div class="page-title-overlap bg-accent pt-4">
+    <app-breadcrumbs title="{{product.name}}" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+</div>
+
+<!-- Shadow box -->
+<section class="container mb-3 pb-3">
+    <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+        <div class="row">
+            <!-- Content -->
+            <section class="col-lg-4 pt-2 pt-lg-4 pb-4 mb-lg-3">
+                <div class="pt-3 px-4 pe-lg-0 ps-xl-5">
+                    <!-- Product gallery -->
+                    <div class="gallery">
+                        <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(0)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;Simple iPhone X Mockups&lt;/h6&gt;">
+                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Gallery preview">
+                            <span class="gallery-item-caption">{{product.name}}</span>
+                        </a>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(1)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;UI Psd iPhone X Monochrome&lt;/h6&gt;">
+                                    <img src="assets/img/marketplace/single/02.jpg" alt="Gallery preview">
+                                    <span class="gallery-item-caption">UI Psd iPhone X Monochrome</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(2)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;iPhone 11 Clay Mockup&lt;/h6&gt;">
+                                    <img src="assets/img/marketplace/single/03.jpg" alt="Gallery preview">
+                                    <span class="gallery-item-caption">iPhone 11 Clay Mockup</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar -->
+            <aside class="col-lg-8 ps-xl-5">
+                <hr class="d-lg-none">
+                <div class="bg-white h-100 p-4 ms-auto border-start">
+                    <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                        <!-- Title -->
+                        <form method="post" (ngSubmit)="UpdateProduct()" [formGroup]="productForm">
+                          <div class="d-sm-flex flex-wrap justify-content-between align-items-center pb-2">
+                            <h2 class="h3 py-2 me-2 text-center text-sm-start">Editar Produto</h2>
+                            <div class="py-2">
+                            </div>
+                          </div>
+              
+                          <div class="col-12">    
+                            <ul *ngIf="errors && errors.length > 0" class="alert alert-danger p-4">
+                                <li *ngFor="let error of errors">{{ error }}</li>
+                            </ul>
+                          </div>
+              
+                          <div class="mb-3 pb-2">
+                            <label class="form-label" for="unp-product-name">
+                              Nome do Produto*
+                            </label>
+                            <input 
+                              class="form-control" 
+                              type="text" 
+                              id="unp-product-name" 
+                              formControlName="name"
+                              [ngClass]="{ 'is-invalid': form['name'].errors && form['name'].touched }">
+                              <div *ngIf="form['name'].errors && form['name'].touched" class="text-danger">
+                                <div *ngIf="form['name'].errors['required']">Por favor, informe o nome do produto</div>
+                              </div> 
+                            <div class="form-text">
+                              Máximo de 100 caracteres. HTML ou emojis não são permitidos.
+                            </div>
+                          </div>
+              
+                          <div class="mb-3 pb-2">
+                            <label class="form-label" for="unp-product-name">
+                              Categoria*
+                            </label>
+                            <select class="form-select me-2" id="unp-category" 
+                              formControlName="categoryId" [ngClass]="{ 'is-invalid': form['categoryId'].errors && form['categoryId'].touched }">
+                              <option selected>Seleccione a categória</option>
+                              <option *ngFor="let category of categories" [value]="category.id">{{category.description}}</option>
+                            </select>
+                            <div *ngIf="form['categoryId'].errors && form['categoryId'].touched" class="text-danger">
+                              <div *ngIf="form['categoryId'].errors['required']">Por favor, seleccione uma categoria para esse produto</div>
+                            </div> 
+                          </div>
+              
+                          <ngx-dropzone (change)="onSelect($event)">
+                            <ngx-dropzone-label><i class="display-4 text-muted bx bxs-cloud-upload"></i>
+                              <h4>Arraste ou clique aqui para enviar a imagem do produto</h4>
+                            </ngx-dropzone-label>
+                            @for(f of files;track $index){
+                            <ngx-dropzone-preview [removable]="true" (removed)="onRemove(f)">
+                              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                          }
+                          </ngx-dropzone> 
+              
+                          <div class="mb-3 mt-3 py-2">
+                            <label class="form-label" for="unp-product-description">
+                              Descrição do produto*
+                            </label>
+                            <div class="NgxEditor__Wrapper">
+                              <ngx-editor-menu [editor]="descriptionEditor" [toolbar]="toolbar"> </ngx-editor-menu>
+                              <ngx-editor 
+                              [editor]="descriptionEditor" 
+                              formControlName="description"
+                              [ngClass]="{ 'is-invalid': form['description'].errors && form['description'].touched }"
+                              [placeholder]="'Descrição do produto'"> </ngx-editor>
+                            </div>
+                            <div *ngIf="form['description'].errors && form['description'].touched" class="text-danger">
+                              <div *ngIf="form['description'].errors['required']">Por favor, forneça mais detalhes sobre o produto</div>
+                            </div> 
+                          </div>
+              
+                          <div class="mb-3 mt-3 py-2">
+                            <label class="form-label" for="unp-product-description">
+                              Especifiações Técnicas
+                            </label>
+                            <div class="NgxEditor__Wrapper">
+                              <ngx-editor-menu [editor]="especificationEditor" [toolbar]="toolbar"> </ngx-editor-menu>
+                              <ngx-editor 
+                              [editor]="especificationEditor" 
+                              formControlName="technicalSpecifications"
+                              [placeholder]="'Especifiações técnicas do produto'"> </ngx-editor>
+                            </div>
+                          </div>
+              
+                          <div class="row">
+                            <div class="col-sm-6 mb-3">
+                              <label class="form-label" for="unp-standard-price">
+                                Preço*
+                              </label>
+                              <div class="input-group">
+                                <span class="input-group-text">
+                                  KZ
+                                </span>
+                                <input 
+                                  class="form-control" 
+                                  type="number" 
+                                  id="unp-standard-price" 
+                                  formControlName="price"
+                                  [ngClass]="{ 'is-invalid': form['price'].errors && form['price'].touched }">
+                                  <div *ngIf="form['price'].errors && form['price'].touched" class="text-danger">
+                                    <div *ngIf="form['price'].errors['required']">Por favor, informe o preço do produto</div>
+                                  </div> 
+                              </div>
+                              <div class="form-text">
+                                Este será o preço normal do produto
+                              </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                              <label class="form-label" for="unp-extended-price">
+                                Preço promocional
+                              </label>
+                              <div class="input-group">
+                                <span class="input-group-text">
+                                  KZ
+                                </span>
+                                <input class="form-control" type="number" id="unp-extended-price" formControlName="promotionalPrice">
+                              </div>
+                              <div class="form-text">
+                                Caso deseja colocar seu produto em promoção.
+                              </div>
+                            </div>
+                          </div>
+              
+                            <!-- <div class="mb-3 pb-2">
+                              <label class="form-label" for="unp-product-files">
+                                Product files for sale
+                              </label>
+                              <input class="form-control" id="unp-product-files" type="file" accept="image/png, image/gif, image/jpeg" formControlName="salefile" (change)="fileChange($event)">
+                              <div class="form-text">Maximum file size is 1GB</div>
+                            </div> -->
+              
+                          <button class="btn btn-primary d-block w-100 mt-3" [disabled]="productForm.invalid" type="submit">
+                            <i class="ci-cloud-upload fs-lg me-2"></i>
+                            Salvar
+                          </button>
+                        </form>
+                      </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>

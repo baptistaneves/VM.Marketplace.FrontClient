@@ -1,10 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 // Light Box
 import { Lightbox } from 'ngx-lightbox';
 // Data Get
 import { review, mockups } from './data';
+import { ProductService } from 'src/app/services/products/product.service';
+import { ProductDto } from 'src/app/models/products/productDto';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { ProductFilter } from 'src/app/models/products/productFilter';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
+import { CommentService } from 'src/app/services/comments/comment.service';
+import { Comment } from 'src/app/models/comments/comment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-single',
@@ -20,26 +30,39 @@ export class SingleComponent implements OnInit {
   _album: Array<any> = [];
   reviews: any;
   mockups: any;
+
   // Comment Form
-  commentForm!: UntypedFormGroup;
+  commentForm: FormGroup;
   submitted = false;
+  errors: any = [];
 
   // review Form
   reviewForm!: UntypedFormGroup;
   rsubmit = false;
 
-  constructor(private lightbox: Lightbox, private formBuilder: UntypedFormBuilder) {
-    for (let i = 1; i <= 3; i++) {
-      const src = 'assets/img/marketplace/single/0' + i + '.jpg';
-      const caption = 'Image ' + i + ' caption here';
-      const thumb = 'assets/img/marketplace/single/0' + i + '.jpg';
-      const album = {
-        src: src,
-        caption: caption,
-        thumb: thumb
-      };
-      this._album.push(album);
-    }
+  product: ProductDto;
+  productsDto: ProductDto[];
+  comments: Comment[];
+  commentModel: Comment;
+  productFilter = new ProductFilter();
+  productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
+
+  showContactInfo: boolean = false;
+
+  constructor(private lightbox: Lightbox, 
+              private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private productService: ProductService,
+              private commentService: CommentService,
+              private toastr: ToastrService,
+              config: NgbModalConfig,
+              private modalService: NgbModal) {
+
+    this.product = this.route.snapshot.data['product'].data;
+
+    config.backdrop = 'static';
+		config.keyboard = false;
+    
   }
 
   ngOnInit(): void {
@@ -54,26 +77,54 @@ export class SingleComponent implements OnInit {
     */
     this.breadCrumbItems = [
       { label: 'Home', link: '' },
-      { label: 'Market', link: '/single' },
-      { label: 'Single Item', active: true, link: '/single' }
+      { label: this.product.categoryName, link: '/categoria/'+this.product.categoryName },
+      { label: this.product.name, active: true, link: '#' }
     ];
 
-    /**
-     * Form Validatyion
-     */
-    this.commentForm = this.formBuilder.group({
-      message: ['', [Validators.required]],
-    });
 
-    /**
-     * Form Validatyion
-     */
-    this.reviewForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      rating: ['', [Validators.required]],
-      review: ['', [Validators.required]],
+    this.listProducts(this.productFilter);
+    this.listComments(this.product.id);
+
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.commentForm = this.formBuilder.group({
+      text: ['', [Validators.required]],
+      userName: ['', [Validators.required]],
+      userEmail: ['', [Validators.required]],
+      userPhoneNumber: [''],
     });
+  }
+
+  AddComment() {
+    if (this.commentForm.dirty && this.commentForm.valid) {
+      this.commentModel = Object.assign({}, this.commentModel, this.commentForm.value);
+
+      this.commentModel.productId = this.product.id;
+
+      this.commentService.add(this.commentModel)
+      .subscribe(
+          response => {
+            this.handleSuccess(response);
+          },
+          error => {this.handleFailure(error)}
+      );
+    }
+  }
+
+  handleSuccess(response: any) {
+    this.commentForm.reset();
+    this.errors = [];
+
+    this.listComments(this.product.id);
+
+    this.toastr.success('Comentário adicionado com Sucesso!', 'Adicionado!!!');
+  }
+
+  handleFailure(fail: any){
+    this.errors = fail.error.data;
+    this.toastr.error('Ocorreu um erro!', 'Opa :(');
   }
 
   /**
@@ -101,6 +152,23 @@ export class SingleComponent implements OnInit {
       }
     ]
   };
+
+  listProducts(filter: ProductFilter) {
+
+    filter.pageSize = 4;
+    filter.category = this.product.categoryName;
+
+    this.productService.getAll(filter).subscribe(response => {
+      this.productsDto = response.data.items;
+      console.log(response.data);
+    })
+  }
+
+  listComments(productId:string) {
+    this.commentService.getAllCommentsByProductId(productId).subscribe(response => {
+      this.comments = response.data;
+    })
+  }
 
   // convenience getter for easy access to form fields
   get form() { return this.commentForm.controls; }
@@ -144,4 +212,36 @@ export class SingleComponent implements OnInit {
     })
     document.getElementById(id)?.classList.add('show')
   }
+
+
+  showContactDetailsInfo() {
+    Swal.fire({
+      title: 'Atenção!',
+      text: 'Não transfira valores ou levante dinheiro para o fornecedor sem verificar a veracidade do produto e do vendedor. Tenha cuidado com as Burlas. O Mercado de Saúde não se responsabiliza por perdas na negociação!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(3, 142, 220)',
+      cancelButtonColor: 'rgb(243, 78, 78)',
+      confirmButtonText: 'Sim, Entedido!',
+      cancelButtonText: 'Não, cancelar!',
+    }).then(result => {
+      if (result.value) {
+        this.showContactInfo = true;
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'Não concordou com os termos :)',
+          icon: 'info',
+          confirmButtonColor: 'rgb(3, 142, 220)',
+          confirmButtonText: 'Ok!',
+        })
+      }
+    });
+  }
+
+  open(content) {
+		this.modalService.open(content);
+	}
 }

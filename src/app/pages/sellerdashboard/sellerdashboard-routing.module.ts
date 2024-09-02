@@ -7,6 +7,8 @@ import { ProductComponent } from './product/product.component';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { PayoutComponent } from './payout/payout.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { EditproductComponent } from './editproduct/editproduct.component';
+import { ProductResolver } from 'src/app/services/products/product.resolver';
 
 const routes: Routes = [
   {
@@ -17,6 +19,13 @@ const routes: Routes = [
   },
   {
     path: 'addproduct', component: AddproductComponent
+  },
+  {
+    path: 'editar-produto/:id',
+    component: EditproductComponent,
+    resolve: {
+      product: ProductResolver
+    }
   },
   {
     path: 'payout', component: PayoutComponent

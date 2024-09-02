@@ -5,10 +5,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { SettingComponent } from './setting/setting.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { AccountGuard } from 'src/app/guards/account.guard';
 
 const routes: Routes = [
   {
-    path: 'setting', component: SettingComponent
+    path: 'minha-conta', component: SettingComponent, canActivate: [AccountGuard],
   },
   {
     path: 'purchase', component: PurchaseComponent

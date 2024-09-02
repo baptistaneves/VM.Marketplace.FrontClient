@@ -10,36 +10,36 @@ export abstract class BaseGuard {
     constructor(protected router: Router,
                 protected toastr: ToastrService){}
     
-    protected validarClaims(routeAc: ActivatedRouteSnapshot) : boolean {
+    protected validateRole(routeAc: ActivatedRouteSnapshot) : boolean {
 
         if(!this.localStorageUtils.getToken()){
-            this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
+            this.router.navigate(['/'], { queryParams: { returnUrl: this.router.url }});
         }  
 
-        let user = this.localStorageUtils.getUser();
-        let claim: any = routeAc.data[0];
-        if (claim !== undefined) {
-            let claim = routeAc.data[0]['claim'];
+        // let user = this.localStorageUtils.getUser();
+        // let claim: any = routeAc.data[0];
+        // if (claim !== undefined) {
+        //     let claim = routeAc.data[0]['claim'];
 
-            if (claim) {
-                if (!user.claims) {
-                    this.AccessDeniedNavigation();
-                }
+        //     if (claim) {
+        //         if (!user.claims) {
+        //             this.AccessDeniedNavigation();
+        //         }
                 
-                let userClaims = user.claims.find(x => x.value === claim.value);
+        //         let userClaims = user.claims.find(x => x.value === claim.value);
 
-                if(!userClaims){
-                    this.AccessDeniedNavigation();
-                }
+        //         if(!userClaims){
+        //             this.AccessDeniedNavigation();
+        //         }
 
-                let valoresClaim = userClaims.value as string;
+        //         let valoresClaim = userClaims.value as string;
                 
-                if (!valoresClaim.includes(claim.value)) {
-                    this.AccessDeniedNavigation();
-                    return false;
-                }
-            }
-        }
+        //         if (!valoresClaim.includes(claim.value)) {
+        //             this.AccessDeniedNavigation();
+        //             return false;
+        //         }
+        //     }
+        // }
 
         return true;  
     }

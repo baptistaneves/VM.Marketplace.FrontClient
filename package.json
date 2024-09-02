@@ -28,6 +28,7 @@
     "ng-apexcharts": "^1.8.0",
     "ngx-credit-cards": "^1.0.9",
     "ngx-dropzone": "^3.1.0",
+    "ngx-editor": "^17.5.4",
     "ngx-lightbox": "^3.0.0",
     "ngx-slick-carousel": "^17.0.0",
     "ngx-toastr": "^18.0.0",

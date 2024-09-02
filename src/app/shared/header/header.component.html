@@ -9,330 +9,126 @@
                 <a class="navbar-brand d-sm-none me-2 order-lg-1" href="javascript:void(0)" routerLink="/">
                     <img src="assets/img/logo-icon.png" width="74" alt="Cartzilla">
                 </a>
-                <!-- Toolbar -->
+
                 <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon" (click)="collapse.toggle()"></span>
-                    </button>
-                    <a class="navbar-tool d-none d-lg-flex" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#searchBox" role="button" aria-expanded="false" aria-controls="searchBox">
-                        <span class="navbar-tool-tooltip">Search</span>
-                        <div class="navbar-tool-icon-box" (click)="collapse.toggle()">
-                            <i class="navbar-tool-icon ci-search"></i>
-                        </div>
+                  <div class="input-group">
+                    <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
+                    <input class="form-control rounded-star" style="width: 800px;" type="text" placeholder="Pesquisar...">
+                  </div>
+
+                    <a *ngIf="loggedInUser == null" class="btn btn-dark mx-2 d-flex align-items-center" href="javascript:void(0);" data-bs-toggle="modal" (click)="openModal()">
+                        <strong>Anunciar/Vender</strong> 
                     </a>
-                    <a class="navbar-tool d-none d-lg-flex" href="javascript:void(0)" routerLink="/favorites">
-                        <span class="navbar-tool-tooltip">Favorites</span>
-                        <div class="navbar-tool-icon-box">
-                            <i class="navbar-tool-icon ci-heart"></i>
-                        </div>
-                    </a>
-                    <!-- <div class="navbar-tool dropdown ms-2" *ngIf="">
-                        <a class="navbar-tool-icon-box border dropdown-toggle" href="javascript:void(0)" routerLink="/sales">
+                    <div *ngIf="loggedInUser != null" class="navbar-tool dropdown ms-2">
+                        <!-- <a class="navbar-tool-icon-box border dropdown-toggle" href="javascript:void(0)" routerLink="/sales">
                             <img src="assets/img/marketplace/account/avatar-sm.png" width="32" alt="themesbrand">
-                        </a>
+                        </a> -->
                         <a class="navbar-tool-text ms-n1" href="javascript:void(0)">
-                            <small>Themesbrand</small>
-                            $1,375.00
+                            <small>Bem-vindo(a)!</small>
+                            {{loggedInUser.fullName}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div style="min-width: 14rem;">
                                 <h6 class="dropdown-header">Account</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/setting">
+                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/minha-conta">
                                     <i class="ci-settings opacity-60 me-2"></i>
-                                    Settings
+                                    Configurações
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/purchase">
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/purchase">
                                     <i class="ci-basket opacity-60 me-2"></i>
                                     Purchases
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/favorites">
+                                </a> -->
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/favorites">
                                     <i class="ci-heart opacity-60 me-2"></i>
                                     Favorites
                                     <span class="fs-xs text-muted ms-auto">4</span>
-                                </a>
+                                </a> -->
                                 <div class="dropdown-divider"></div>
-                                <h6 class="dropdown-header">Seller Dashboard</h6>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/sales">
+                                <h6 class="dropdown-header">Painel de Vendas</h6>
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/sales">
                                     <i class="ci-dollar opacity-60 me-2"></i>
                                     Sales
                                     <span class="fs-xs text-muted ms-auto">$1,375.00</span>
-                                </a>
+                                </a> -->
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/product">
                                     <i class="ci-package opacity-60 me-2"></i>
-                                    Products
+                                    Produtos
                                     <span class="fs-xs text-muted ms-auto">5</span>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/addproduct">
                                     <i class="ci-cloud-upload opacity-60 me-2"></i>
-                                    Add New
-                                    Product
+                                    Novo Produto
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/payout">
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/payout">
                                     <i class="ci-currency-exchange opacity-60 me-2"></i>
                                     Payouts
-                                </a>
+                                </a> -->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)">
+                                <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" (click)="logOut()">
                                     <i class="ci-sign-out opacity-60 me-2"></i>
-                                    Sign Out
+                                    Sair
                                 </a>
                             </div>
                         </div>
-                    </div> -->
-
-                    
-                    <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="javascript:void(0);" data-bs-toggle="modal" (click)="toggleModal(toggleFirstModal)">
-                        <div class="navbar-tool-icon-box"><i class="navbar-tool-icon
-                            ci-user"></i></div>
-                        <div class="navbar-tool-text ms-n3"><small>Olá, Entrar na</small>Minha
-                        Conta</div>
-                    </a>
-
-                    <div class="navbar-tool ms-4">
-                        <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="javascript:void(0)" routerLink="/cart">
-                            <span class="navbar-tool-label">{{cartproduct.length}}</span>
-                            <i class="navbar-tool-icon ci-cart"></i>
-                        </a>
-                    </div>
-                </div>
-                <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-                    <!-- Search -->
-                    <div class="input-group d-lg-none my-3">
-                        <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-                        <input class="form-control rounded-start" type="text" placeholder="Search marketplace">
-                    </div>
-                    <!-- Categories dropdown -->
-                    <ul class="navbar-nav navbar-mega-nav pe-lg-2 me-lg-2">
-                        <li class="nav-item dropdown" ngbDropdown>
-                            <a class="nav-link dropdown-toggle ps-lg-0" href="javascript:void(0)" data-bs-toggle="dropdown" ngbDropdownToggle>
-                                <i class="ci-menu align-middle mt-n1 me-2"></i>
-                                Categories
-                            </a>
-                            <ul ngbDropdownMenu class="dropdown-menu py-1">
-                                @for(cat of allcategories;track $index){
-                                <li class="dropdown" ngbDropdown>
-                                    <a class="dropdown-item dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown" ngbDropdownToggle>
-                                        {{cat.name}}
-                                    </a>
-                                    <ul class="dropdown-menu" ngbDropdownMenu>
-                                        <li class="dropdown-item product-title fw-medium">
-                                            <a href="javascript:void(0)" routerLink="/category">
-                                                {{cat.mainsub}}
-                                                <i class="ci-arrow-right fs-xs ms-1"></i>
-                                            </a>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        @for(sub of cat.subcategory;track $index){
-                                        <li>
-                                            <a class="dropdown-item" href="javascript:void(0)" routerLink="/category">
-                                                {{sub}}
-                                            </a>
-                                        </li>
-                                        }
-                                    </ul>
-                                </li>
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- Primary menu -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" routerLink="/">
-                                Back to main
-                                demo
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Search collapse -->
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="search-box collapse" id="searchBox">
-            <div class="card pt-2 pb-4 border-0 rounded-0">
-                <div class="container">
-                    <div class="input-group">
-                        <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-                        <input class="form-control rounded-start" type="text" placeholder="Search marketplace">
                     </div>
                 </div>
             </div>
         </div>
     </header>
 </div>
-<!-- Toolbar for handheld devices (Marketplace) -->
-<div class="handheld-toolbar">
-    <div class="d-table table-layout-fixed w-100">
-        <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/favorites">
-            <span class="handheld-toolbar-icon">
-                <i class="ci-heart"></i>
-            </span>
-            <span class="handheld-toolbar-label">Favorites</span>
-        </a>
-        <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)" (click)="collapse.toggle()">
-            <span class="handheld-toolbar-icon">
-                <i class="ci-menu"></i>
-            </span>
-            <span class="handheld-toolbar-label">Menu</span>
-        </a>
-        <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/cart">
-            <span class="handheld-toolbar-icon">
-                <i class="ci-cart"></i>
-                <span class="badge bg-primary rounded-pill ms-1">3</span>
-            </span>
-            <span class="handheld-toolbar-label">$56.00</span>
-        </a>
+
+
+
+<div class="navbar-tool dropdown ms-2" *ngIf="">
+    <a class="navbar-tool-icon-box border dropdown-toggle" href="javascript:void(0)" routerLink="/sales">
+        <img src="assets/img/marketplace/account/avatar-sm.png" width="32" alt="themesbrand">
+    </a>
+    <a class="navbar-tool-text ms-n1" href="javascript:void(0)">
+        <small>Themesbrand</small>
+        $1,375.00
+    </a>
+    <div class="dropdown-menu dropdown-menu-end">
+        <div style="min-width: 14rem;">
+            <h6 class="dropdown-header">Account</h6>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/setting">
+                <i class="ci-settings opacity-60 me-2"></i>
+                Settings
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/purchase">
+                <i class="ci-basket opacity-60 me-2"></i>
+                Purchases
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/favorites">
+                <i class="ci-heart opacity-60 me-2"></i>
+                Favorites
+                <span class="fs-xs text-muted ms-auto">4</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Seller Dashboard</h6>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/sales">
+                <i class="ci-dollar opacity-60 me-2"></i>
+                Sales
+                <span class="fs-xs text-muted ms-auto">$1,375.00</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/product">
+                <i class="ci-package opacity-60 me-2"></i>
+                Products
+                <span class="fs-xs text-muted ms-auto">5</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/addproduct">
+                <i class="ci-cloud-upload opacity-60 me-2"></i>
+                Add New
+                Product
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/payout">
+                <i class="ci-currency-exchange opacity-60 me-2"></i>
+                Payouts
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)">
+                <i class="ci-sign-out opacity-60 me-2"></i>
+                Sign Out
+            </a>
+        </div>
     </div>
 </div>
-
-<!-- Sign In Modal-->
-<ng-template #toggleFirstModal let-modal>
-    <div class="modal-content">
-      <div class="modal-header bg-secondary">
-        <ul class="nav nav-tabs card-header-tabs" role="tablist" ngbNav #nav="ngbNav">
-          <li [ngbNavItem]="1">
-            <a ngbNavLink class="nav-link fw-medium"><i class="ci-unlocked me-2
-                mt-n1"></i>Login</a>
-            <ng-template ngbNavContent>
-              <form class="needs-validation tab-pane fade show active" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="mb-3">
-                  <label class="form-label" for="si-email">Email address</label>
-                  <input class="form-control" type="email" id="si-email" placeholder="johndoe@example.com" required formControlName="email" [ngClass]="{ 'is-invalid': submitted
-                    && f['email'].errors }">
-                  <div class="invalid-feedback">Please provide a valid email
-                    address.</div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="si-password">Password
-                    {{loginPassfield}}</label>
-                  <div class="password-toggle">
-                    <input class="form-control" [type]="loginPassfield ? 'text' :
-                      'password'" id="si-password" required formControlName="password" [ngClass]="{ 'is-invalid':
-                      submitted && f['password'].errors }">
-                    <label class="password-toggle-btn" aria-label="Show/hide
-                      password">
-                      <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !loginPassfield,
-                        'mdi-eye-outline': loginPassfield
-                        }" (click)="toggleLoginPassField()"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="mb-3 d-flex flex-wrap justify-content-between">
-                  <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="si-remember">
-                    <label class="form-check-label" for="si-remember">Remember me</label>
-                  </div><a class="fs-sm" href="javascript:void(0);">Forgot
-                    password?</a>
-                </div>
-                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign in</button>
-              </form>
-            </ng-template>
-          </li>
-          <li [ngbNavItem]="2">
-            <a ngbNavLink class="nav-link fw-medium"><i class="ci-user me-2
-                mt-n1"></i>Conta Vendedor</a>
-            <ng-template ngbNavContent>
-              <form class="needs-validation tab-pane fade show active" autocomplete="off" [formGroup]="SignupForm" (ngSubmit)="SignupSubmit()">
-                <div class="mb-3">
-                  <label class="form-label" for="su-name">Full name</label>
-                  <input class="form-control" type="text" id="su-name" placeholder="John Doe" required formControlName="name" [ngClass]="{ 'is-invalid': submit &&
-                    fa['name'].errors }">
-                  <div class="invalid-feedback">Please fill in your name.</div>
-                </div>
-                <div class="mb-3">
-                  <label for="su-email">Email address</label>
-                  <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required formControlName="email" [ngClass]="{ 'is-invalid': submit &&
-                    fa['email'].errors }">
-                  <div class="invalid-feedback">Please provide a valid email
-                    address.</div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="su-password">Password</label>
-                  <div class="password-toggle">
-                    <input class="form-control" [type]="signupPassfield ? 'text' :
-                      'password'" id="su-password" required formControlName="password" [ngClass]="{ 'is-invalid': submit
-                      && fa['password'].errors }">
-                    <label class="password-toggle-btn" aria-label="Show/hide
-                      password">
-                      <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !signupPassfield,
-                        'mdi-eye-outline': signupPassfield
-                        }" (click)="togglesignupPassfield()"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="su-password-confirm">Confirm
-                    password</label>
-                  <div class="password-toggle">
-                    <input class="form-control" [type]="signupCPassfield ? 'text'
-                      : 'password'" id="su-password-confirm" required>
-                    <label class="password-toggle-btn" aria-label="Show/hide
-                      password">
-                      <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !signupCPassfield,
-                        'mdi-eye-outline': loginPassfield
-                        }" (click)="togglesignupCPassfield()"></span>
-                    </label>
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-              </form>
-            </ng-template>
-          </li>
-          <li [ngbNavItem]="3">
-            <a ngbNavLink class="nav-link fw-medium"><i class="ci-user me-2
-                mt-n1"></i>Conta Cliente</a>
-            <ng-template ngbNavContent>
-              <form class="needs-validation tab-pane fade show active" autocomplete="off" [formGroup]="SignupForm" (ngSubmit)="SignupSubmit()">
-                <div class="mb-3">
-                  <label class="form-label" for="su-name">Full name</label>
-                  <input class="form-control" type="text" id="su-name" placeholder="John Doe" required formControlName="name" [ngClass]="{ 'is-invalid': submit &&
-                    fa['name'].errors }">
-                  <div class="invalid-feedback">Please fill in your name.</div>
-                </div>
-                <div class="mb-3">
-                  <label for="su-email">Email address</label>
-                  <input class="form-control" type="email" id="su-email" placeholder="johndoe@example.com" required formControlName="email" [ngClass]="{ 'is-invalid': submit &&
-                    fa['email'].errors }">
-                  <div class="invalid-feedback">Please provide a valid email
-                    address.</div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="su-password">Password</label>
-                  <div class="password-toggle">
-                    <input class="form-control" [type]="signupPassfield ? 'text' :
-                      'password'" id="su-password" required formControlName="password" [ngClass]="{ 'is-invalid': submit
-                      && fa['password'].errors }">
-                    <label class="password-toggle-btn" aria-label="Show/hide
-                      password">
-                      <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !signupPassfield,
-                        'mdi-eye-outline': signupPassfield
-                        }" (click)="togglesignupPassfield()"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="su-password-confirm">Confirm
-                    password</label>
-                  <div class="password-toggle">
-                    <input class="form-control" [type]="signupCPassfield ? 'text'
-                      : 'password'" id="su-password-confirm" required>
-                    <label class="password-toggle-btn" aria-label="Show/hide
-                      password">
-                      <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !signupCPassfield,
-                        'mdi-eye-outline': loginPassfield
-                        }" (click)="togglesignupCPassfield()"></span>
-                    </label>
-                  </div>
-                </div>
-                <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Sign up</button>
-              </form>
-            </ng-template>
-          </li>
-        </ul>
-        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" (click)="modal.close()"></button>
-      </div>
-      <div class="modal-body tab-content py-4">
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
-      </div>
-    </div>
-  </ng-template>

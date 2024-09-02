@@ -7,6 +7,7 @@ import { SingleComponent } from './single/single.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CategoryComponent } from './category/category.component';
+import { ProductResolver } from '../services/products/product.resolver';
 
 const routes: Routes = [
   {
@@ -16,13 +17,20 @@ const routes: Routes = [
     path: 'single', component: SingleComponent
   },
   {
+    path: 'produto/:id',
+    component: SingleComponent,
+    resolve: {
+      product: ProductResolver
+    }
+  },
+  {
     path: 'cart', component: CartComponent
   },
   {
     path: 'checkout', component: CheckoutComponent
   },
   {
-    path: 'category', component: CategoryComponent
+    path: 'categoria/:name', component: CategoryComponent
   },
   {
     path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)

@@ -19,6 +19,9 @@ import { ProductComponent } from './product/product.component';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { PayoutComponent } from './payout/payout.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { RouterModule } from '@angular/router';
+import { EditproductComponent } from './editproduct/editproduct.component';
+import { NgxEditorModule } from 'ngx-editor';
 
 
 @NgModule({
@@ -26,19 +29,23 @@ import { VendorComponent } from './vendor/vendor.component';
     SalesComponent,
     ProductComponent,
     AddproductComponent,
+    EditproductComponent,
     PayoutComponent,
     VendorComponent
   ],
   imports: [
     CommonModule,
+    SharedModule,
     NgbTooltipModule,
     NgbCollapseModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     SallerdashboardRoutingModule,
     SharedModule,
     NgApexchartsModule,
     NgxDropzoneModule,
+    NgxEditorModule
   ]
 })
 export class SellerdashboardModule { }

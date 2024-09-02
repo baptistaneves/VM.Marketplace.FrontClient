@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbNavModule, NgbRatingModule, NgbAccordionModule, NgbDropdownModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbRatingModule, NgbAccordionModule, NgbDropdownModule, NgbPaginationModule, NgbTooltipModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 // Swiper Slider
@@ -45,7 +45,8 @@ import { SellerdashboardModule } from './sellerdashboard/sellerdashboard.module'
     AccountModule,
     SellerdashboardModule,
     NgbTooltipModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    NgbAlertModule
   ]
 })
 export class PagesModule { }

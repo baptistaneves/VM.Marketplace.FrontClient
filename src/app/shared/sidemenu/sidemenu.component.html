@@ -10,22 +10,22 @@
 <div class="h-100 border-end mb-2">
     <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="d-lg-block collapse" id="account-menu">
         <div class="bg-secondary p-4">
-            <h3 class="fs-sm mb-0 text-muted">Account</h3>
+            <h3 class="fs-sm mb-0 text-muted">Minha Conta</h3>
         </div>
         <ul class="list-unstyled mb-0">
             <li class="border-bottom mb-0">
-                <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/setting" href="setting">
+                <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/minha-conta" href="setting">
                     <i class="ci-settings opacity-60 me-2"></i>
-                    Settings
+                    Configurações
                 </a>
             </li>
-            <li class="border-bottom mb-0">
+            <!-- <li class="border-bottom mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/purchase" href="purchase">
                     <i class="ci-basket opacity-60 me-2"></i>
                     Purchases
                 </a>
-            </li>
-            <li class="mb-0">
+            </li> -->
+            <!-- <li class="mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/favorites" href="favorites">
                     <i class="ci-heart opacity-60 me-2"></i>
                     Favorites
@@ -35,23 +35,23 @@
                     </span>
                 }
                 </a>
-            </li>
+            </li> -->
         </ul>
         <div class="bg-secondary p-4">
-            <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
+            <h3 class="fs-sm mb-0 text-muted">Painel de Vendas</h3>
         </div>
         <ul class="list-unstyled mb-0">
-            <li class="border-bottom mb-0">
+            <!-- <li class="border-bottom mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/sales" href="sales">
                     <i class="ci-dollar opacity-60 me-2"></i>
                     Sales
                     <span class="fs-sm text-muted ms-auto">$1,375.00</span>
                 </a>
-            </li>
+            </li> -->
             <li class="border-bottom mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/product" href="product">
                     <i class="ci-package opacity-60 me-2"></i>
-                    Products
+                    Produtos
                     @if(products.length > 0){
                     <span class="fs-sm text-muted ms-auto">
                         {{products.length}}
@@ -62,19 +62,19 @@
             <li class="border-bottom mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/addproduct" href="addproduct">
                     <i class="ci-cloud-upload opacity-60 me-2"></i>
-                    Add New Product
+                    Novo Produto
                 </a>
             </li>
-            <li class="border-bottom mb-0">
+            <!-- <li class="border-bottom mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3 menulist" routerLink="/payout" href="payout">
                     <i class="ci-currency-exchange opacity-60 me-2"></i>
                     Payouts
                 </a>
-            </li>
+            </li> -->
             <li class="mb-0">
                 <a class="nav-link-style d-flex align-items-center px-4 py-3" routerLink="/account/signin">
                     <i class="ci-sign-out opacity-60 me-2"></i>
-                    Sign out
+                    Sair
                 </a>
             </li>
         </ul>

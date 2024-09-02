@@ -3,7 +3,7 @@
 
 <!-- Page Title -->
 <div class="page-title-overlap bg-accent pt-4">
-  <app-breadcrumbs title="Marketplace category" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+  <app-breadcrumbs title="{{categoryDescription}}" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 </div>
 
 <!-- Content -->
@@ -14,7 +14,7 @@
       <!-- Search -->
       <div class="input-group">
         <i class="ci-search position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
-        <input class="form-control border-0 shadow-none" type="text" [(ngModel)]="service.searchTerm" placeholder="Search in this category...">
+        <input class="form-control border-0 shadow-none" type="text" (keyup)="onInputChange($event)" placeholder="Procure nesta categória...">
       </div>
       <!-- Sort -->
       <div class="d-flex align-items-center">
@@ -29,31 +29,19 @@
             <li (click)="Changecategory('Newest','flag','title')">
               <a class="dropdown-item" href="javascript:void(0)">
                 <i class="ci-flag me-2 opacity-60"></i>
-                Newest
-              </a>
-            </li>
-            <li (click)="Changecategory('Bestsellers','rocket','sale')">
-              <a class="dropdown-item" href="javascript:void(0)">
-                <i class="ci-rocket me-2 opacity-60"></i>
-                Bestsellers
-              </a>
-            </li>
-            <li (click)="Changecategory('Updated','loading','update')">
-              <a class="dropdown-item" href="javascript:void(0)">
-                <i class="ci-loading me-2 opacity-60"></i>
-                Updated
+                Recente
               </a>
             </li>
             <li (click)="Changecategory('Low Price','arrow-down','price')">
               <a class="dropdown-item" href="javascript:void(0)">
                 <i class="ci-arrow-down me-2 opacity-60"></i>
-                Low Price
+                Preço Baixo
               </a>
             </li>
             <li (click)="Changecategory('High Price','arrow-up','price')">
               <a class="dropdown-item" href="javascript:void(0)">
                 <i class="ci-arrow-up me-2 opacity-60"></i>
-                High Price
+                Preço Alto
               </a>
             </li>
           </ul>
@@ -94,64 +82,64 @@
   <!-- Products grid -->
   <div class="row pt-3 mx-n2">
     <!-- Product -->
-    @for(cat of products;track $index){
-    <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter">
+    <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
       <div class="card product-card-alt">
-        <div class="product-thumb">
-          <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist">
-            <i class="ci-heart"></i>
-          </button>
-          <div class="product-card-actions">
-            <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="javascript:void(0)" ngbTooltip="View" routerLink="/single">
-              <i class="ci-eye"></i>
-            </a>
-            <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart" (click)="addcart($index)">
-              <i class="ci-cart"></i>
-            </button>
+          <div class="product-thumb" style="height: 200px;">
+              <!-- <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist">
+                  <i class="ci-heart"></i>
+              </button> -->
+              <div class="product-card-actions">
+                  <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="View" routerLink="/produto/{{product.id}}">
+                  <i class="ci-eye"></i>
+                  </a>
+                  <!-- <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart" (click)="addcart($index)">
+                  <i class="ci-cart"></i>
+                  </button> -->
+              </div>
+              <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
+              <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
           </div>
-          <a class="product-thumb-overlay" href="javascript:void(0)" routerLink="/single"></a>
-          <img src="{{cat.image}}" alt="Product">
-        </div>
-        <div class="card-body">
+          <div class="card-body">
           <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
-            <div class="text-muted fs-xs me-1">
-              by
+              <div class="text-muted fs-xs me-1">
+              por
               <a class="product-meta fw-medium" href="javascript:void(0)">
-                {{cat.by}}
+                  {{product.userFullName}}
               </a>
-              in
+              em
               <a class="product-meta fw-medium" href="javascript:void(0)">
-                {{cat.in}}
+                  {{product.categoryName}}
               </a>
-            </div>
-            <div class="star-rating me-2">
+              </div>
+              <!-- <div class="star-rating me-2">
               <ng-template #t let-fill="fill">
-                <span class="star" [class.full]="fill === 100">
+                  <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">
-                    ★
+                      ★
                   </span>
                   ☆
-                </span>
+                  </span>
               </ng-template>
               <ngb-rating class="d-inline-flex stars align-middle star-rating" [(rate)]="cat.rate" [starTemplate]="t" [readonly]="true" [max]="5">
               </ngb-rating>
-            </div>
+              </div> -->
           </div>
           <h3 class="product-title fs-sm mb-2">
-            <a href="javascript:void(0)">{{cat.title}}</a>
+              <a routerLink="/produto/{{product.id}}">{{product.name}}</a>
           </h3>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="fs-sm me-2">
-              <i class="ci-download text-muted me-1"></i>
-              {{cat.sale}}
-              <span class="fs-xs ms-1">Sales</span>
-            </div>
-            <div class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">${{cat.price}}</div>
+              <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price | currency:'AOA': 'symbol':'1.2-2' }}</div>
+              <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price | currency:'AOA': 'symbol':'1.2-2' }}</div>
+              
+              <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
+                  <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
+                      {{ product.promotionalPrice | currency:' AOA': 'symbol':'1.2-2' }}
+                    </span>                    
+                  </div>
           </div>
-        </div>
+          </div>
       </div>
     </div>
-    }
 
   </div>
   <hr class="my-3">
@@ -160,10 +148,10 @@
   <ngb-pagination class="d-flex justify-content-center pt-2" [collectionSize]="(total | async)!" [(page)]="service.page" [pageSize]="service.pageSize" aria-label="Custom pagination">
     <ng-template ngbPaginationPrevious let-page let-pages="pages">
       <i class="ci-arrow-left me-2"></i>
-      Prev
+      Anterior
     </ng-template>
     <ng-template ngbPaginationNext>
-      Next
+      Próximo
       <i class="ci-arrow-right ms-2"></i>
     </ng-template>
   </ngb-pagination>

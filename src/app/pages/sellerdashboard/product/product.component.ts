@@ -3,6 +3,11 @@ import { product } from './data';
 
 // Sweet Alert
 import Swal from 'sweetalert2';
+import { ProductService } from 'src/app/services/products/product.service';
+import { ProductDto } from 'src/app/models/products/productDto';
+import { ToastrService } from 'ngx-toastr';
+import { ProductFilter } from 'src/app/models/products/productFilter';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product',
@@ -12,65 +17,88 @@ import Swal from 'sweetalert2';
 
 // Product Component
 export class ProductComponent implements OnInit {
-  products: any;
+  productsDto: ProductDto[] = [];
+
   sortfilter: any;
   isDesc: boolean = false;
 
-  constructor() { }
+  errors: any = [];
+
+  filter = new ProductFilter();
+  productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
+
+
+  constructor(private productService: ProductService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
     // When the user clicks on the button, scroll to the top of the document
     document.documentElement.scrollTop = 0;
 
+    this.listProduct(this.filter);
+    
     //Fetch Data
-    this.products = product;
     this.sortfilter = 'title';
 
-    // set small decimal point
-    setTimeout(() => {
-      document.querySelectorAll('.price').forEach((e) => {
-        let txt = e.innerHTML.split('.');
-        e.innerHTML = txt[0] + '.<small>' + txt[1] + '</small>';
-      });
-    }, 0);
   }
 
-  //remove from products
-  removeproduct(id: any) {
+  listProduct(filter: ProductFilter) {
+    this.productService.getAll(filter).subscribe(response => {
+      this.productsDto = response.data.items;
+    });
+  }
+
+  removeProduct(id:string) {
+    this.productService.remove(id)  .subscribe(
+      sucesso => { this.handleSuccessRemove() },
+      erros => { this.handleFailure(erros) }
+    );
+  }
+
+
+  handleSuccessRemove() {
+    this.errors = [];
+
+    Swal.fire({ title: 'Excluido!', text: 'O produto foi excluido com sucesso.', confirmButtonColor: 'rgb(3, 142, 220)', icon: 'success', });
+    this.listProduct(this.filter);
+  }
+
+  handleFailure(fail: any){
+    this.errors = fail.error.data;
+    this.toastr.error('Ocorreu um erro!', 'Opa :(');
+  }
+
+  removeproduct(id:string) {
     Swal.fire({
-      title: 'Are you Sure ?',
-      text: 'Are you Sure You want to Remove this Product ?',
+      title: 'Você tem certeza?',
+      text: 'Este produto será removido!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: 'green',
+      confirmButtonColor: 'rgb(3, 142, 220)',
       cancelButtonColor: 'rgb(243, 78, 78)',
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+      confirmButtonText: 'Sim, Remover!',
+      cancelButtonText: 'Não, cancelar!',
+    }).then(result => {
       if (result.value) {
+        this.removeProduct(id);
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
         Swal.fire({
-          title: 'Deleted!',
-          text: 'Your file has been deleted.',
-          confirmButtonColor: '#364574',
-          icon: 'success',
-        });
-        this.products.splice(id, 1);
+          title: 'Cancelado',
+          text: 'Remoção do produto cancelada :)',
+          icon: 'info',
+          confirmButtonColor: 'rgb(3, 142, 220)',
+          confirmButtonText: 'Ok!',
+        })
       }
     });
   }
 
   // Sort
   filtering() {
-    this.isDesc = !this.isDesc;
-    let direction = this.isDesc ? 1 : -1;
-    this.products.sort((a: any, b: any) => {
-      if (a[this.sortfilter] < b[this.sortfilter]) {
-        return -1 * direction;
-      } else if (a[this.sortfilter] > b[this.sortfilter]) {
-        return 1 * direction;
-      } else {
-        return 0;
-      }
-    });
+    
   }
+
 }

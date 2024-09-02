@@ -13,9 +13,12 @@ import { FooterComponent } from './footer/footer.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AccountBreadcrumbsComponent } from './account-breadcrumbs/account-breadcrumbs.component';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { SignmodalComponent } from './signmodal/signmodal.component';
+import { CurrencyAoaPipe } from './pipes/currency-aoa.pipe';
 
 @NgModule({
   declarations: [
+    SignmodalComponent,
     HeaderComponent,
     FooterComponent,
     BreadcrumbsComponent,

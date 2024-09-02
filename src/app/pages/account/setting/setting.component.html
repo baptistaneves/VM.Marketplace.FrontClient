@@ -17,24 +17,24 @@
             <!-- Content -->
             <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
                 <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
-                    <h2 class="h3 py-2 text-center text-sm-start">Settings</h2>
+                    <h2 class="h3 py-2 text-center text-sm-start">Minha Conta</h2>
                     <!-- Tabs -->
                     <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav nav-tabs nav-justified">
                         <li [ngbNavItem]="1" class="nav-item">
                             <a ngbNavLink class="nav-link px-0" href="javascript:void(0)">
                                 <div class="d-none d-lg-block">
                                     <i class="ci-user opacity-60 me-2"></i>
-                                    Profile
+                                    Perfil
                                 </div>
                                 <div class="d-lg-none text-center">
                                     <i class="ci-user opacity-60 d-block fs-xl mb-2"></i>
-                                    <span class="fs-ms">Profile</span>
+                                    <span class="fs-ms">Perfil</span>
                                 </div>
                             </a>
                             <ng-template ngbNavContent>
                                 <!-- Profile -->
                                 <div class="tab-pane fade show active" id="profile" role="tabpanel">
-                                    <div class="bg-secondary rounded-3 p-4 mb-4">
+                                    <!-- <div class="bg-secondary rounded-3 p-4 mb-4">
                                         <div class="d-flex align-items-center">
                                             <img class="rounded" src="assets/img/marketplace/account/avatar.png" width="90" alt="Themesbrand">
                                             <div class="ps-3">
@@ -50,134 +50,174 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row gx-4 gy-3">
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-fn">
-                                                First Name
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-fn" value="John">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-ln">
-                                                Last Name
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-ln" value="Doe">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-email">
-                                                Email address
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-email" value="contact@example.com" disabled>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-profile-name">
-                                                Profile
-                                                Name
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-profile-name" value="Themesbrand">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-country">
-                                                Country
-                                            </label>
-                                            <select class="form-select" id="dashboard-country">
-                                                <option value>Select country</option>
-                                                <option value="Argentina">Argentina</option>
-                                                <option value="Belgium">Belgium</option>
-                                                <option value="France">France</option>
-                                                <option value="Germany">Germany</option>
-                                                <option value="Madagascar" selected>
-                                                    Madagascar
-                                                </option>
-                                                <option value="Spain">Spain</option>
-                                                <option value="UK">United Kingdom</option>
-                                                <option value="USA">USA</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-city">
-                                                City
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-city" value="Antananarivo">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-address">
-                                                Address Line
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-address" value="Some Cool Street, 22/1">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="dashboard-zip">
-                                                ZIP Code
-                                            </label>
-                                            <input class="form-control" type="text" id="dashboard-zip">
-                                        </div>
-                                        <div class="col-12">
-                                            <hr class="mt-2 mb-4">
-                                            <div class="d-sm-flex justify-content-between align-items-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="freelancer" checked>
-                                                    <label class="form-check-label" for="freelancer">
-                                                        I'm available
-                                                        for
-                                                        freelance
-                                                    </label>
+                                    </div> -->
+                                    <form [formGroup]="userForm" (ngSubmit)="update()">
+                                        <div class="col-12">    
+                                            <ul *ngIf="errors && errors.length > 0" class="alert alert-danger p-4">
+                                                <li *ngFor="let error of errors">{{ error }}</li>
+                                            </ul>
+                                          </div>
+                                          <input type="hidden" formControlName="id">
+                                          
+                                        <div class="row gx-4 gy-3">
+                                            <div class="col-sm-12">
+                                                <label class="form-label" for="dashboard-fn">
+                                                    Nome
+                                                </label>
+                                                <input 
+                                                class="form-control" 
+                                                type="text" 
+                                                id="dashboard-fn"
+                                                formControlName="fullName"
+                                                [ngClass]="{ 'is-invalid': f['fullName'].errors && f['fullName'].touched }">
+                                                <div *ngIf="f['fullName'].errors && f['fullName'].touched" class="text-danger">
+                                                    <div *ngIf="f['fullName'].errors['required']">Por favor, informe o nome completo</div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label" for="dashboard-ln">
+                                                    E-mail
+                                                </label>
+                                                <input 
+                                                class="form-control" 
+                                                type="email" 
+                                                id="dashboard-ln"
+                                                formControlName="email"
+                                                [ngClass]="{ 'is-invalid': f['email'].errors && f['email'].touched }">
+                                                <div *ngIf="f['email'].errors && f['email'].touched" class="text-danger">
+                                                    <div *ngIf="f['email'].errors['required']">Por favor, informe o e-mail</div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label" for="dashboard-email">
+                                                    Telefone
+                                                </label>
+                                                <input 
+                                                class="form-control" 
+                                                type="text" 
+                                                id="dashboard-email"
+                                                formControlName="phoneNumber"
+                                                [ngClass]="{ 'is-invalid': f['phoneNumber'].errors && f['phoneNumber'].touched }">
+                                                <div *ngIf="f['phoneNumber'].errors && f['phoneNumber'].touched" class="text-danger">
+                                                    <div *ngIf="f['phoneNumber'].errors['required']">Por favor, informe o número do telefone</div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label" for="dashboard-profile-name">
+                                                    Provícia
+                                                </label>
+                                                <select 
+                                                class="form-select" 
+                                                id="dashboard-country" 
+                                                formControlName="state"
+                                                [ngClass]="{ 'is-invalid': f['state'].errors && f['state'].touched }">
+                                                    <option selected>Selecione a Província</option>
+                                                    
+                                                    <option *ngFor="let state of states" [value]="state.name">{{state.name}}</option>
+                                                </select>
+                                                <div *ngIf="f['state'].errors && f['state'].touched" class="text-danger">
+                                                    <div *ngIf="f['state'].errors['required']">Por favor, seleccione a província onde reside</div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label" for="dashboard-country">
+                                                    Munícipio
+                                                </label>
+                                                <select 
+                                                class="form-select" 
+                                                id="dashboard-country" 
+                                                formControlName="city"
+                                                [ngClass]="{ 'is-invalid': f['city'].errors && f['city'].touched }">
+                                                    <option selected>Selecione o munícipio</option>
+                                                    
+                                                    <option *ngFor="let city of cities" [value]="city.name">{{city.name}}</option>
+                                                </select>
+                                                <div *ngIf="f['city'].errors && f['city'].touched" class="text-danger">
+                                                    <div *ngIf="f['city'].errors['required']">Por favor, seleccione o munícipio onde reside</div>
                                                 </div>
-                                                <button class="btn btn-primary mt-3 mt-sm-0" type="button">
-                                                    Save
-                                                    changes
-                                                </button>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <label class="form-label" for="dashboard-city">
+                                                    Endereço
+                                                </label>
+                                                <input 
+                                                class="form-control" 
+                                                type="text"
+                                                formControlName="address"
+                                                [ngClass]="{ 'is-invalid': f['address'].errors && f['address'].touched }">
+                                                <div *ngIf="f['address'].errors && f['address'].touched" class="text-danger">
+                                                    <div *ngIf="f['address'].errors['required']">Por favor, informe seu endereço</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <hr class="mt-2 mb-4">
+                                                <div class="d-sm-flex justify-content-between align-items-center">
+                                                     <div class="form-check">
+                                                        <!-- <input class="form-check-input" type="checkbox" id="freelancer" checked>
+                                                        <label class="form-check-label" for="freelancer">
+                                                            I'm available
+                                                            for
+                                                            freelance
+                                                        </label> -->
+                                                    </div> 
+                                                    <button class="btn btn-primary mt-3 mt-sm-0" type="submit">
+                                                        Salvar
+                                                        alterações
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
+                                    
                                 </div>
                             </ng-template>
                         </li>
                         <li [ngbNavItem]="2" class="nav-item">
                             <a ngbNavLink class="nav-link px-0" href="javascript:void(0)">
                                 <div class="d-none d-lg-block">
-                                    <i class="ci-bell opacity-60 me-2"></i>
-                                    Notifications
+                                    <i class="ci-check-circle opacity-60 me-2"></i>
+                                    Verificação
                                 </div>
-                                <div class="d-lg-none text-center">
+                                <!-- <div class="d-lg-none text-center">
                                     <i class="ci-bell opacity-60 d-block fs-xl mb-2"></i>
                                     <span class="fs-ms">Notifications</span>
-                                </div>
+                                </div> -->
                             </a>
                             <ng-template ngbNavContent>
-                                <!-- Notifications -->
+                                <div class="col-12">    
+                                    <ul *ngIf="errors && errors.length > 0" class="alert alert-danger p-4">
+                                        <li *ngFor="let error of errors">{{ error }}</li>
+                                    </ul>
+                                  </div>
                                 <div class="bg-secondary rounded-3 p-4">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="nf-disable-all" value="option" [(ngModel)]="masterSelected" (change)="checkUncheckAll($event)">
                                         <label class="form-check-label fw-medium" for="nf-disable-all">
-                                            Enable/disable
-                                            all
-                                            notifications
+                                            Envie sua Licença ou Alvará no formato png, jpeg ou jpg para que sua conta esteja verificada!
                                         </label>
                                     </div>
                                 </div>
                                 <div id="notifocation-settings">
-                                    @for(notify of allnotification;track $index){
-                                    <div class="border-bottom p-4">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="nf-product-sold" [(ngModel)]="notify.state">
-                                            <label class="form-check-label" for="nf-product-sold">
-                                                {{notify.title}}
-                                            </label>
-                                        </div>
-                                        <div class="form-text">{{notify.subtitle}}</div>
-                                    </div>
-                                    }
-                                </div>
-                                <div class="text-sm-end mt-4">
-                                    <button class="btn btn-primary" type="button">
-                                        Save changes
-                                    </button>
+                                    <form method="post" (ngSubmit)="addLicense()" [formGroup]="licenseForm">                                                            
+                                        <ngx-dropzone (change)="onSelect($event)">
+                                          <ngx-dropzone-label><i class="display-4 text-muted bx bxs-cloud-upload"></i>
+                                            <h4>Arraste ou clique aqui para enviar o aqruivo</h4>
+                                          </ngx-dropzone-label>
+                                          @for(f of files;track $index){
+                                          <ngx-dropzone-preview [removable]="true" (removed)="onRemove(f)">
+                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                          </ngx-dropzone-preview>
+                                        }
+                                        </ngx-dropzone> 
+
+                                        <button class="btn btn-primary d-block w-100 mt-3" [disabled]="licenseForm.invalid" type="submit">
+                                          <i class="ci-cloud-upload fs-lg me-2"></i>
+                                          Enviar
+                                        </button>
+                                      </form>
                                 </div>
                             </ng-template>
                         </li>
-                        <li [ngbNavItem]="3" class="nav-item">
+                        <!-- <li [ngbNavItem]="3" class="nav-item">
                             <a ngbNavLink class="nav-link px-0" href="javascript:void(0)" data-bs-toggle="tab" role="tab">
                                 <div class="d-none d-lg-block">
                                     <i class="ci-card opacity-60 me-2"></i>
@@ -189,7 +229,6 @@
                                 </div>
                             </a>
                             <ng-template ngbNavContent>
-                                <!-- Payment methods -->
                                 <div class="bg-secondary rounded-3 p-4 mb-4">
                                     <p class="fs-sm text-muted mb-0">
                                         Primary payment method is used by default
@@ -240,7 +279,7 @@
                                     </a>
                                 </div>
                             </ng-template>
-                        </li>
+                        </li> -->
                     </ul>
                     <!-- Tab content -->
                     <div class="tab-content">

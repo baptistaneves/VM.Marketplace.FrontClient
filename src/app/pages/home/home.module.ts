@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SlickCarouselModule,
-    SharedModule,
+    SharedModule
   ]
 })
 export class HomeModule { }
