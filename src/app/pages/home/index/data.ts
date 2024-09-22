@@ -153,26 +153,26 @@ const service = [
     {
         id: '1',
         image: 'assets/img/marketplace/features/quality.png',
-        title: 'Quality Guarantee',
-        sub_title: 'Quality checked by our team'
+        title: 'Qualidade Garantida',
+        sub_title: 'A qualidade é o que nos caracteriza'
     },
     {
         id: '2',
         image: 'assets/img/marketplace/features/support.png',
-        title: 'Customer Support',
-        sub_title: 'Friendly 24/7 customer support'
+        title: 'Suporte ao Cliente',
+        sub_title: 'Atendimento personalizado'
     },
     {
         id: '3',
         image: 'assets/img/marketplace/features/updates.png',
-        title: 'Lifetime Free Updates',
-        sub_title: 'Never pay for an update'
+        title: 'Fornecedores Confiaveis',
+        sub_title: 'Fornecedores verificados'
     },
     {
         id: '4',
         image: 'assets/img/marketplace/features/secure.png',
-        title: 'Secure Payments',
-        sub_title: 'We posess SSL / Secure сertificate'
+        title: 'Segurança',
+        sub_title: 'Segurança assegurada'
     },
 ]
 

@@ -115,8 +115,8 @@
                   </span>
                   <input 
                     class="form-control" 
-                    type="number" 
-                    id="unp-standard-price" 
+                    type="text" 
+                    mask="separator.2" thousandSeparator="." decimalMarker="," suffix=",00"
                     formControlName="price"
                     [ngClass]="{ 'is-invalid': form['price'].errors && form['price'].touched }">
                     <div *ngIf="form['price'].errors && form['price'].touched" class="text-danger">
@@ -135,7 +135,7 @@
                   <span class="input-group-text">
                     KZ
                   </span>
-                  <input class="form-control" type="number" id="unp-extended-price" formControlName="promotionalPrice">
+                  <input class="form-control" type="text" mask="separator.2" thousandSeparator="." decimalMarker="," suffix=",00" formControlName="promotionalPrice">
                 </div>
                 <div class="form-text">
                   Caso deseja colocar seu produto em promoção.

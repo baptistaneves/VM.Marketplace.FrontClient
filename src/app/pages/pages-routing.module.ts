@@ -8,6 +8,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductResolver } from '../services/products/product.resolver';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,9 @@ const routes: Routes = [
   },
   {
     path: 'categoria/:name', component: CategoryComponent
+  },
+  {
+    path: 'pesquisar/:query', component: SearchComponent
   },
   {
     path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)

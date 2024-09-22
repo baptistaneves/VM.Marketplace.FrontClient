@@ -51,10 +51,10 @@
                   {{product.name}}
                 </a>
               </h3>
-              <div class="d-inline-block text-accent price">{{product.price}}kz</div>
+              <div class="d-inline-block text-accent price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
               <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">
                 Visualizações:
-                <span class="fw-medium">{{product.promotionalPrice}}</span>
+                <span class="fw-medium">5</span>
               </div>
                <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2 price">
                 Categória:

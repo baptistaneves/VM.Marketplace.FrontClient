@@ -1,0 +1,161 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Page Title -->
+<div class="page-title-overlap bg-accent pt-4">
+    <app-breadcrumbs title="Resultados" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+</div>
+
+<!-- Content -->
+<div class="container pb-5 mb-2 mb-md-4">
+    <!-- Toolbar -->
+    <div class="bg-light shadow-lg rounded-3 mt-n5 mb-4">
+      <div class="d-flex align-items-center ps-2">
+        <!-- Search -->
+        <div class="input-group">
+          <i class="ci-search position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
+          <input class="form-control border-0 shadow-none" type="text" (keyup)="onInputChange($event)" placeholder="Procure nesta categória...">
+        </div>
+        <!-- Sort -->
+        <div class="d-flex align-items-center">
+          <div ngbDropdown class="dropdown py-4 border-start">
+            <a class="nav-link-style fs-md fw-medium dropdown-toggle p-4" href="javascript:void(0)" data-bs-toggle="dropdown" ngbDropdownToggle>
+              <span class="d-inline-block py-1">
+                <i class="ci-{{itemicon}} align-middle opacity-60 mt-n1 me-2"></i>
+                {{selectedCategory}}
+              </span>
+            </a>
+            <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+              <li (click)="Changecategory('Newest','flag','title')">
+                <a class="dropdown-item" href="javascript:void(0)">
+                  <i class="ci-flag me-2 opacity-60"></i>
+                  Recente
+                </a>
+              </li>
+              <li (click)="Changecategory('Low Price','arrow-down','price')">
+                <a class="dropdown-item" href="javascript:void(0)">
+                  <i class="ci-arrow-down me-2 opacity-60"></i>
+                  Preço Baixo
+                </a>
+              </li>
+              <li (click)="Changecategory('High Price','arrow-up','price')">
+                <a class="dropdown-item" href="javascript:void(0)">
+                  <i class="ci-arrow-up me-2 opacity-60"></i>
+                  Preço Alto
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Pagination -->
+        <ngb-pagination [collectionSize]="(total | async)!" [(page)]="service.page" [directionLinks]="false">
+          <ng-template ngbPaginationPages let-page let-pages="pages">
+            @if(pages.length > 0){
+            <li>
+              <div class="d-none d-md-flex align-items-center border-start ps-4">
+                <span class="fs-md text-nowrap me-4">
+                  Pages&nbsp; {{service.page}} / {{pages.length}}
+                </span>
+                <a class="nav-link-style p-4 border-start" href="javascript:void(0)">
+                  <span class="d-inline-block py-1">
+                    <i class="ci-arrow-left"></i>
+                  </span>
+                </a>
+                <a class="nav-link-style p-4 border-start" href="javascript:void(0)">
+                  <span class="d-inline-block py-1">
+                    <i class="ci-arrow-right"></i>
+                  </span>
+                </a>
+              </div>
+            </li>
+            }
+          </ng-template>
+          <ng-template ngbPaginationPrevious let-page let-pages="pages">
+            <i class="ci-arrow-left me-2"></i>
+          </ng-template>
+          <ng-template ngbPaginationNext>
+            <i class="ci-arrow-right ms-2"></i>
+          </ng-template>
+        </ngb-pagination>
+      </div>
+    </div>
+    <!-- Products grid -->
+    <div class="row pt-3 mx-n2">
+      <!-- Product -->
+      <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
+        <div class="card product-card-alt">
+            <div class="product-thumb" style="height: 200px;">
+                <!-- <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist">
+                    <i class="ci-heart"></i>
+                </button> -->
+                <div class="product-card-actions">
+                    <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="View" routerLink="/produto/{{product.id}}">
+                    <i class="ci-eye"></i>
+                    </a>
+                    <!-- <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart" (click)="addcart($index)">
+                    <i class="ci-cart"></i>
+                    </button> -->
+                </div>
+                <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
+                <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
+            </div>
+            <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                <div class="text-muted fs-xs me-1">
+                por
+                <a class="product-meta fw-medium" href="javascript:void(0)">
+                    {{product.userFullName}}
+                </a>
+                em
+                <a class="product-meta fw-medium" href="javascript:void(0)">
+                    {{product.categoryName}}
+                </a>
+                </div>
+                <!-- <div class="star-rating me-2">
+                <ng-template #t let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">
+                        ★
+                    </span>
+                    ☆
+                    </span>
+                </ng-template>
+                <ngb-rating class="d-inline-flex stars align-middle star-rating" [(rate)]="cat.rate" [starTemplate]="t" [readonly]="true" [max]="5">
+                </ngb-rating>
+                </div> -->
+            </div>
+            <h3 class="product-title fs-sm mb-2">
+                <a routerLink="/produto/{{product.id}}">{{product.name}}</a>
+            </h3>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                
+                <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
+                    <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
+                        {{ product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
+                      </span>                    
+                    </div>
+            </div>
+            </div>
+        </div>
+      </div>
+  
+    </div>
+    <hr class="my-3">
+    <!-- Pagination -->
+  
+    <ngb-pagination class="d-flex justify-content-center pt-2" [collectionSize]="(total | async)!" [(page)]="service.page" [pageSize]="service.pageSize" aria-label="Custom pagination">
+      <ng-template ngbPaginationPrevious let-page let-pages="pages">
+        <i class="ci-arrow-left me-2"></i>
+        Anterior
+      </ng-template>
+      <ng-template ngbPaginationNext>
+        Próximo
+        <i class="ci-arrow-right ms-2"></i>
+      </ng-template>
+    </ngb-pagination>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

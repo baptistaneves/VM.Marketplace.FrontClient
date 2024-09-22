@@ -16,7 +16,7 @@
                     <!-- Product gallery -->
                     <div class="gallery">
                         <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(0)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;Simple iPhone X Mockups&lt;/h6&gt;">
-                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Gallery preview">
+                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Gallery preview" style="height: 400px;">
                             <span class="gallery-item-caption">{{product.name}}</span>
                         </a>
                         <!-- <div class="row">
@@ -76,10 +76,10 @@
                                         </label>
                                     </div>
                                     <h5 *ngIf="product.promotionalPrice <= 0" class="mb-0 text-accent fw-normal">
-                                        {{product.price | currency:' AOA': 'symbol':'1.2-2' }}
+                                        {{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
                                     </h5>
                                     <h5 *ngIf="product.promotionalPrice" style="text-decoration:line-through; font-size: 16px;" class="mb-0 text-accent fw-normal">
-                                        {{product.price | currency:' AOA': 'symbol':'1.2-2' }}
+                                        {{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
                                     </h5>
                                 </div>
                                 <!-- <div class="accordion-collapse collapse show" id="standard-license" data-bs-parent="#licenses">
@@ -110,9 +110,8 @@
                                         </label>
                                     </div>
                                     <h5 class="mb-0 text-accent fw-normal">
-                                        {{product.promotionalPrice | currency:' AOA': 'symbol':'1.2-2' }}
-                                    </h5>
-                                </div>
+                                        {{product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
+                                    </h5>                                </div>
                                 <!-- <div class="accordion-collapse collapse border-0" id="extended-license" data-bs-parent="#licenses">
                                     <div class="accordion-body py-0 pb-2">
                                         <ul class="list-unstyled fs-sm">
@@ -154,14 +153,19 @@
                                 </div>
                             </a>
                         </div>
-                        <div *ngIf="showContactInfo" class="bg-secondary rounded p-3 mb-2">
-                            <i class="ci-phone h5 text-muted align-middle mb-0 mt-n1 me-2"></i>
-                            <span class="fs-sm">{{product.phoneNumber}}</span>
-                        </div>
                         <div *ngIf="showContactInfo" class="bg-secondary rounded p-3 mb-3">
                             <i class="ci-mail h5 text-muted align-middle mb-0 mt-n1 me-2"></i>
                             <span class="fs-sm">{{product.email}}</span>
                         </div>
+                        <div *ngIf="showContactInfo" class="bg-secondary rounded p-3 mb-2">
+                            <i class="ci-phone h5 text-muted align-middle mb-0 mt-n1 me-2"></i>
+                            <span class="fs-sm">{{product.phoneNumber}}</span>
+                        </div>
+                        <div *ngIf="showContactInfo" class="bg-secondary rounded p-3 mb-2">
+                            <i class="ci-home h5 text-muted align-middle mb-0 mt-n1 me-2"></i>
+                            <span class="fs-sm">{{product.address}}</span>
+                        </div>
+                        
                         <ul class="list-unstyled fs-sm mt-3">
                             <li class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                                 <span class="text-dark fw-medium">Categoria</span>
@@ -333,16 +337,10 @@
     <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
         <div class="card product-card-alt">
             <div class="product-thumb" style="height: 200px;">
-                <!-- <button class="btn-wishlist btn-sm" type="button" ngbTooltip="Add to wishlist">
-                    <i class="ci-heart"></i>
-                </button> -->
                 <div class="product-card-actions">
                     <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="View" routerLink="/produto/{{product.id}}">
                     <i class="ci-eye"></i>
                     </a>
-                    <!-- <button class="btn btn-light btn-icon btn-shadow fs-base mx-2" type="button" ngbTooltip="Add to cart" (click)="addcart($index)">
-                    <i class="ci-cart"></i>
-                    </button> -->
                 </div>
                 <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
                 <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
@@ -359,29 +357,17 @@
                     {{product.categoryName}}
                 </a>
                 </div>
-                <!-- <div class="star-rating me-2">
-                <ng-template #t let-fill="fill">
-                    <span class="star" [class.full]="fill === 100">
-                    <span class="half" [style.width.%]="fill">
-                        ★
-                    </span>
-                    ☆
-                    </span>
-                </ng-template>
-                <ngb-rating class="d-inline-flex stars align-middle star-rating" [(rate)]="cat.rate" [starTemplate]="t" [readonly]="true" [max]="5">
-                </ngb-rating>
-                </div> -->
             </div>
             <h3 class="product-title fs-sm mb-2">
                 <a routerLink="/produto/{{product.id}}">{{product.name}}</a>
             </h3>
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price | currency:'AOA': 'symbol':'1.2-2' }}</div>
-                <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price | currency:'AOA': 'symbol':'1.2-2' }}</div>
+                <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
                 
                 <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
                     <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
-                        {{ product.promotionalPrice | currency:' AOA': 'symbol':'1.2-2' }}
+                        {{ product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
                       </span>                    
                     </div>
             </div>

@@ -17,6 +17,12 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ProductResolver } from './services/products/product.resolver';
 import { ProductByCategoryResolver } from './services/products/productByCategory.resolver';
 import { CommentService } from './services/comments/comment.service';
+import { CurrencyPipe } from '@angular/common';
+import { IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
+
+const maskConfig: Partial<IConfig> = {
+  dropSpecialCharacters: false,
+};
 
 @NgModule({
   declarations: [
@@ -28,10 +34,13 @@ import { CommentService } from './services/comments/comment.service';
     AppRoutingModule,
     PagesModule,
     HttpClientModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),    
+    NgxMaskDirective,
+    NgxMaskPipe
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    provideNgxMask(),
     LoginService,
     UserService,
     StateService,
@@ -40,7 +49,7 @@ import { CommentService } from './services/comments/comment.service';
     ProductService,
     CommentService,
     ProductResolver,
-    ProductByCategoryResolver
+    ProductByCategoryResolver,
   ],
   bootstrap: [AppComponent]
 })

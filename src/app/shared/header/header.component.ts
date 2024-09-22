@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
   loginForm!: UntypedFormGroup;
   submitted = false;
 
+  queryFilter:string;
 
   signupPassfield!: boolean;
   signupCPassfield!: boolean;
@@ -140,6 +141,16 @@ export class HeaderComponent implements OnInit {
     this.modalService.open(SignmodalComponent, { size: 'md', centered: true });
   }
 
+  onKeyUp(event: KeyboardEvent): void {
+    const target = event.target as HTMLInputElement;
+    this.queryFilter = target.value; 
+
+    this.onSearch();
+  }
+
+  onSearch(): void  {
+      this.router.navigate(['/pesquisar',this.queryFilter]);
+  }
 
   /**
   * Password Hide/Show

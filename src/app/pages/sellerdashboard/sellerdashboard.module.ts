@@ -22,6 +22,7 @@ import { VendorComponent } from './vendor/vendor.component';
 import { RouterModule } from '@angular/router';
 import { EditproductComponent } from './editproduct/editproduct.component';
 import { NgxEditorModule } from 'ngx-editor';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 
 @NgModule({
@@ -45,7 +46,9 @@ import { NgxEditorModule } from 'ngx-editor';
     SharedModule,
     NgApexchartsModule,
     NgxDropzoneModule,
-    NgxEditorModule
+    NgxEditorModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ]
 })
 export class SellerdashboardModule { }

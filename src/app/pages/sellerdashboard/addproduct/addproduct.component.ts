@@ -69,8 +69,9 @@ export class AddproductComponent implements OnInit {
       isMedicine: [false],
       ExpiryDate: [null]
     });
-  }
-
+  
+  }  
+ 
   listCategories() {
     this.categoryService.getAll().subscribe(response => {
       this.categories = response.data;
@@ -110,15 +111,14 @@ export class AddproductComponent implements OnInit {
         formdata.append('imageFile', this.imagemForm, this.imagemNome);
       }
 
-      console.log(this.createProductModel);
+       this.productService.add(formdata)
+       .subscribe(
+           response => {
+             this.handleSuccess(response);
+           },
+           error => {this.handleFailure(error)}
+       );
 
-      this.productService.add(formdata)
-      .subscribe(
-          response => {
-            this.handleSuccess(response);
-          },
-          error => {this.handleFailure(error)}
-      );
     }
   }
 

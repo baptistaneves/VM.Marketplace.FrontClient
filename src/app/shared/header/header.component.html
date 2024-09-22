@@ -11,58 +11,42 @@
                 </a>
 
                 <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+                    
                   <div class="input-group">
                     <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
-                    <input class="form-control rounded-star" style="width: 800px;" type="text" placeholder="Pesquisar...">
+                    <input 
+                    class="form-control rounded-star" 
+                    style="width: 800px;" 
+                    type="text" 
+                    placeholder="Pesquisar..."
+                    (keyup)="onKeyUp($event)">
                   </div>
 
                     <a *ngIf="loggedInUser == null" class="btn btn-dark mx-2 d-flex align-items-center" href="javascript:void(0);" data-bs-toggle="modal" (click)="openModal()">
                         <strong>Anunciar/Vender</strong> 
                     </a>
                     <div *ngIf="loggedInUser != null" class="navbar-tool dropdown ms-2">
-                        <!-- <a class="navbar-tool-icon-box border dropdown-toggle" href="javascript:void(0)" routerLink="/sales">
-                            <img src="assets/img/marketplace/account/avatar-sm.png" width="32" alt="themesbrand">
-                        </a> -->
                         <a class="navbar-tool-text ms-n1" href="javascript:void(0)">
                             <small>Bem-vindo(a)!</small>
                             {{loggedInUser.fullName}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div style="min-width: 14rem;">
-                                <h6 class="dropdown-header">Account</h6>
+                                <h6 class="dropdown-header">Minha Conta</h6>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/minha-conta">
                                     <i class="ci-settings opacity-60 me-2"></i>
                                     Configurações
                                 </a>
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/purchase">
-                                    <i class="ci-basket opacity-60 me-2"></i>
-                                    Purchases
-                                </a> -->
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/favorites">
-                                    <i class="ci-heart opacity-60 me-2"></i>
-                                    Favorites
-                                    <span class="fs-xs text-muted ms-auto">4</span>
-                                </a> -->
                                 <div class="dropdown-divider"></div>
                                 <h6 class="dropdown-header">Painel de Vendas</h6>
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/sales">
-                                    <i class="ci-dollar opacity-60 me-2"></i>
-                                    Sales
-                                    <span class="fs-xs text-muted ms-auto">$1,375.00</span>
-                                </a> -->
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/product">
                                     <i class="ci-package opacity-60 me-2"></i>
                                     Produtos
-                                    <span class="fs-xs text-muted ms-auto">5</span>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/addproduct">
                                     <i class="ci-cloud-upload opacity-60 me-2"></i>
                                     Novo Produto
                                 </a>
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/payout">
-                                    <i class="ci-currency-exchange opacity-60 me-2"></i>
-                                    Payouts
-                                </a> -->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" (click)="logOut()">
                                     <i class="ci-sign-out opacity-60 me-2"></i>
@@ -75,60 +59,4 @@
             </div>
         </div>
     </header>
-</div>
-
-
-
-<div class="navbar-tool dropdown ms-2" *ngIf="">
-    <a class="navbar-tool-icon-box border dropdown-toggle" href="javascript:void(0)" routerLink="/sales">
-        <img src="assets/img/marketplace/account/avatar-sm.png" width="32" alt="themesbrand">
-    </a>
-    <a class="navbar-tool-text ms-n1" href="javascript:void(0)">
-        <small>Themesbrand</small>
-        $1,375.00
-    </a>
-    <div class="dropdown-menu dropdown-menu-end">
-        <div style="min-width: 14rem;">
-            <h6 class="dropdown-header">Account</h6>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/setting">
-                <i class="ci-settings opacity-60 me-2"></i>
-                Settings
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/purchase">
-                <i class="ci-basket opacity-60 me-2"></i>
-                Purchases
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/favorites">
-                <i class="ci-heart opacity-60 me-2"></i>
-                Favorites
-                <span class="fs-xs text-muted ms-auto">4</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Seller Dashboard</h6>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/sales">
-                <i class="ci-dollar opacity-60 me-2"></i>
-                Sales
-                <span class="fs-xs text-muted ms-auto">$1,375.00</span>
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/product">
-                <i class="ci-package opacity-60 me-2"></i>
-                Products
-                <span class="fs-xs text-muted ms-auto">5</span>
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/addproduct">
-                <i class="ci-cloud-upload opacity-60 me-2"></i>
-                Add New
-                Product
-            </a>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)" routerLink="/payout">
-                <i class="ci-currency-exchange opacity-60 me-2"></i>
-                Payouts
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)">
-                <i class="ci-sign-out opacity-60 me-2"></i>
-                Sign Out
-            </a>
-        </div>
-    </div>
 </div>

@@ -117,6 +117,7 @@ export class EditproductComponent implements OnInit{
       isMedicine: product.isMedicine,
       ExpiryDate: product.expiryDate
     });
+
   }
 
   getProductById(id:string) {
@@ -145,22 +146,24 @@ export class EditproductComponent implements OnInit{
       this.updateProductModel = Object.assign({}, this.updateProductModel, this.productForm.value);
       this.updateProductModel.id = this.product.id;
       this.updateProductModel.mainPhoto = this.product.mainPhoto;
-
-      let formdata = new FormData();
+   
+       let formdata = new FormData();
   
-      formdata.append('product', JSON.stringify(this.updateProductModel));
+       formdata.append('product', JSON.stringify(this.updateProductModel));
 
-      if(this.imagemForm && this.imagemNome) {
-        formdata.append('imageFile', this.imagemForm, this.imagemNome);
-      }
+       if(this.imagemForm && this.imagemNome) {
+         formdata.append('imageFile', this.imagemForm, this.imagemNome);
+       }
 
-      this.productService.update(formdata)
-      .subscribe(
-          response => {
-            this.handleSuccess(response);
-          },
-          error => {this.handleFailure(error)}
-      );
+      
+       this.productService.update(formdata)
+       .subscribe(
+           response => {
+             this.handleSuccess(response);
+           },
+           error => {this.handleFailure(error)}
+       );
+
     }
   }
 

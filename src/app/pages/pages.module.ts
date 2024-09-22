@@ -21,13 +21,16 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { AccountModule } from './account/account.module';
 import { SellerdashboardModule } from './sellerdashboard/sellerdashboard.module';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     SingleComponent,
     CartComponent,
     CheckoutComponent,
-    CategoryComponent
+    CategoryComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,9 @@ import { SellerdashboardModule } from './sellerdashboard/sellerdashboard.module'
     SellerdashboardModule,
     NgbTooltipModule,
     SlickCarouselModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgxMaskDirective,
+    NgxMaskPipe
   ]
 })
 export class PagesModule { }
