@@ -7,4 +7,6 @@ export class UpdateUserSellerRequest {
     city: string;
     state: string;
     address: string;
+    businessLicense: string;
+    taxIdentificationNumber: string;
 }
