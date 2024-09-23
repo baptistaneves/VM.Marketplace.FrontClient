@@ -42,8 +42,12 @@ export class SearchComponent  implements OnInit {
 
   ngOnInit(): void {
 
+
     this.route.params.subscribe((params: Params) => {
       this.queryFilter = params['query'];
+      this.productFilter.searchTerm = this.queryFilter;
+      this.listProducts(this.productFilter);
+
     });
 
     this.productFilter.searchTerm = this.queryFilter;

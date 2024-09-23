@@ -49,6 +49,8 @@ export class SingleComponent implements OnInit {
 
   showContactInfo: boolean = false;
 
+  productId: string;
+
   constructor(private lightbox: Lightbox, 
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -81,6 +83,10 @@ export class SingleComponent implements OnInit {
       { label: this.product.name, active: true, link: '#' }
     ];
 
+    this.route.params.subscribe(params => {
+      this.productId = params['id'];
+      this.product = this.route.snapshot.data['product'].data;
+    });
 
     this.listProducts(this.productFilter);
     this.listComments(this.product.id);
