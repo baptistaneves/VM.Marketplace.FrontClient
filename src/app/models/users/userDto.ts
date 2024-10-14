@@ -16,5 +16,6 @@ export class UserDto {
     iban: string;
     createdAt: Date;
     isDeleted: boolean
-    isBlocked: boolean
+    isBlocked: boolean;
+    businessLicense: string;
 }

@@ -44,6 +44,16 @@ export class UserService extends BaseService {
     return response;
   }
 
+  removeBusinessLicense() : Observable<any>{
+    let response = this.http
+        .delete(this.UrlServiceV1 + "users/remover-alvara-comercial", this.GetAuthHeaderJson())
+        .pipe((
+          map(this.extractData),
+          catchError(this.serviceError)));
+
+    return response;
+  }
+
   update(user: UpdateUserSellerRequest) : Observable<any>{
     let response = this.http
         .put<UpdateUserSellerRequest>(this.UrlServiceV1 + "users/actualizar-dados-da-minha-conta", user, this.GetAuthHeaderJson())

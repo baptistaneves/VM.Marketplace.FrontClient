@@ -19,46 +19,7 @@
                             <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Gallery preview" style="height: 400px;">
                             <span class="gallery-item-caption">{{product.name}}</span>
                         </a>
-                        <!-- <div class="row">
-                            <div class="col-sm-6">
-                                <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(1)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;UI Psd iPhone X Monochrome&lt;/h6&gt;">
-                                    <img src="assets/img/marketplace/single/02.jpg" alt="Gallery preview">
-                                    <span class="gallery-item-caption">UI Psd iPhone X Monochrome</span>
-                                </a>
-                            </div>
-                            <div class="col-sm-6">
-                                <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(2)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;iPhone 11 Clay Mockup&lt;/h6&gt;">
-                                    <img src="assets/img/marketplace/single/03.jpg" alt="Gallery preview">
-                                    <span class="gallery-item-caption">iPhone 11 Clay Mockup</span>
-                                </a>
-                            </div>
-                        </div> -->
                     </div>
-                    <!-- Wishlist + Sharing -->
-                    <!-- <div class="d-flex flex-wrap justify-content-between align-items-center border-top pt-3">
-                        <div class="py-2 me-2">
-                            <button class="btn btn-outline-accent" type="button">
-                                <i class="ci-heart fs-lg me-2"></i>
-                                Add
-                                to Favorites
-                            </button>
-                        </div>
-                        <div class="py-2">
-                            <i class="ci-share-alt fs-lg align-middle text-muted me-2"></i>
-                            <a class="btn-social bs-outline bs-facebook bs-sm ms-2" href="javascript:void(0);">
-                                <i class="ci-facebook"></i>
-                            </a>
-                            <a class="btn-social bs-outline bs-twitter bs-sm ms-2" href="javascript:void(0);">
-                                <i class="ci-twitter"></i>
-                            </a>
-                            <a class="btn-social bs-outline bs-pinterest bs-sm ms-2" href="javascript:void(0);">
-                                <i class="ci-pinterest"></i>
-                            </a>
-                            <a class="btn-social bs-outline bs-instagram bs-sm ms-2" href="javascript:void(0);">
-                                <i class="ci-instagram"></i>
-                            </a>
-                        </div>
-                    </div> -->
                 </div>
             </section>
             <!-- Sidebar -->
@@ -82,24 +43,6 @@
                                         {{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
                                     </h5>
                                 </div>
-                                <!-- <div class="accordion-collapse collapse show" id="standard-license" data-bs-parent="#licenses">
-                                    <div class="accordion-body py-0 pb-2">
-                                        <ul class="list-unstyled fs-sm">
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Quality verified</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Use for a single project</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Non-paying users only</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> -->
                             </div>
                             <div class="accordion-item" *ngIf="product.promotionalPrice">
                                 <div class="accordion-header d-flex justify-content-between align-items-center py-3">
@@ -111,25 +54,9 @@
                                     </div>
                                     <h5 class="mb-0 text-accent fw-normal">
                                         {{product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
-                                    </h5>                                </div>
-                                <!-- <div class="accordion-collapse collapse border-0" id="extended-license" data-bs-parent="#licenses">
-                                    <div class="accordion-body py-0 pb-2">
-                                        <ul class="list-unstyled fs-sm">
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Quality verified</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Use for a single project</span>
-                                            </li>
-                                            <li class="d-flex align-items-center">
-                                                <i class="ci-check-circle text-success me-1"></i>
-                                                <span class="fs-ms">Paying users allowed</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> -->
+                                    </h5>                             
+                                   </div>
+                              
                             </div>
                         </div>
                         <hr>

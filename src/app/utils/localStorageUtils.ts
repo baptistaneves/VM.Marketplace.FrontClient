@@ -26,4 +26,16 @@ export class LocalStorageUtils {
         localStorage.setItem('user', JSON.stringify(user));
     }
 
+    public saveFilterData(filter:string) {
+        localStorage.setItem('searchValue', filter);
+    }
+
+    public getFilterData() {
+        return localStorage.getItem('searchValue');
+    }
+
+    public removeFilterData() {
+        localStorage.removeItem('searchValue');
+    }
+
 }

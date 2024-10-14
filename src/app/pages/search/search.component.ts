@@ -42,7 +42,6 @@ export class SearchComponent  implements OnInit {
 
   ngOnInit(): void {
 
-
     this.route.params.subscribe((params: Params) => {
       this.queryFilter = params['query'];
       this.productFilter.searchTerm = this.queryFilter;
@@ -69,19 +68,6 @@ export class SearchComponent  implements OnInit {
       { label: 'Resultados' },
       { label: this.productFilter.searchTerm, active: true }
     ];
-
-   // set decimal point to small and adjust to Angolan Kwanza format
-    setTimeout(() => {
-      document.querySelectorAll(".price").forEach((e) => {
-        let txt = e.innerHTML.split(".")
-        let wholePart = txt[0];
-        let decimalPart = txt.length > 1 ? txt[1] : '00'; // handling cases where there might be no decimal part
-        // Format the number with commas for thousand separators
-        wholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        // Combine whole part and decimal part with Angolan Kwanza symbol
-        e.innerHTML = wholePart + ",<small>" + decimalPart + "</small> Kz";
-      });
-    }, 0);
     
   }
 
@@ -93,7 +79,7 @@ export class SearchComponent  implements OnInit {
   }
 
   onInputChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
+    let value = (event.target as HTMLInputElement).value;
 
     this.productFilter.searchTerm = value;
     this.listProducts(this.productFilter)

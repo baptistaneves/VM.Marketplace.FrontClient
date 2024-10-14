@@ -19,7 +19,8 @@
                     style="width: 800px;" 
                     type="text" 
                     placeholder="Pesquisar..."
-                    (keyup)="onKeyUp($event)">
+                    (keyup)="onKeyUp($event)"
+                    [(ngModel)]="queryFilter">
                   </div>
 
                     <a *ngIf="loggedInUser == null" class="btn btn-dark mx-2 d-flex align-items-center" href="javascript:void(0);" data-bs-toggle="modal" (click)="openModal()">

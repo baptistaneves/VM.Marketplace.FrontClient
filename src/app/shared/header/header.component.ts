@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 
 // Header Component
 export class HeaderComponent implements OnInit {
-
+  
   public isCollapsed = true;
   cartproduct: any;
   allcategories: any;
@@ -36,13 +36,13 @@ export class HeaderComponent implements OnInit {
   public LocalStorage = new LocalStorageUtils();
   loggedInUser:any;
 
-
   constructor(
     private modalService: NgbModal, 
     private formBuilder: UntypedFormBuilder,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.setDataToInputFilter();
     this.loggedInUser = this.LocalStorage.getUser();
 
     this.allcategories = category;
@@ -64,6 +64,14 @@ export class HeaderComponent implements OnInit {
       name: ['', [Validators.required]],
       password: ['', Validators.required],
     });
+  }
+
+  
+  setDataToInputFilter() {
+    const storedValue =  this.LocalStorage.getFilterData();
+    if (storedValue) {
+      this.queryFilter = storedValue;
+    }
   }
 
   // tslint:disable-next-line: typedef
@@ -144,6 +152,13 @@ export class HeaderComponent implements OnInit {
   onKeyUp(event: KeyboardEvent): void {
     const target = event.target as HTMLInputElement;
     this.queryFilter = target.value; 
+
+    if (this.queryFilter.trim() === '')   {
+      this.LocalStorage.removeFilterData();
+    } 
+    else  {
+      this.LocalStorage.saveFilterData(this.queryFilter);
+    }
 
     this.onSearch();
   }
