@@ -39,6 +39,24 @@ export class ProductService extends BaseService {
       .pipe(catchError(super.serviceError));
   }
 
+  getProductsByUser(filter: ProductFilter) : Observable<any>{
+    let params = this.getPaginationHeaders(filter.pageNumber, filter.pageSize);
+  
+    params = params.append('searchTerm', filter.searchTerm);
+    
+    return this.http
+      .get<any>(
+        this.UrlServiceV1 + "products/obter-produtos-por-usuario",
+        { 
+          params, 
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.LocalStorage.getToken()}`
+          })
+        }
+      )
+      .pipe(catchError(super.serviceError));
+  }
 
   add(product: FormData) : Observable<any>{
     let response = this.http

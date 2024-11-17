@@ -18,8 +18,9 @@
             <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
                 <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
                     <h2 class="h3 py-2 text-center text-sm-start">
-                        Minha Conta 
-                        <span class="badge bg-warning badge-shadow">Não verificado</span>
+                        Conta 
+                        <span *ngIf="!userData.isVerified" class="badge bg-warning badge-shadow">Não verificada</span>
+                        <span *ngIf="userData.isVerified" class="badge bg-success badge-shadow">Verificada</span>
                     </h2>
                     <!-- Tabs -->
                     <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav nav-tabs nav-justified">

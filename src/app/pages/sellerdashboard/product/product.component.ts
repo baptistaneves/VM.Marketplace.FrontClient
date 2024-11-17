@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 
 // Product Component
 export class ProductComponent implements OnInit {
-  productsDto: ProductDto[] = [];
+  products: ProductDto[] = [];
 
   sortfilter: any;
   isDesc: boolean = false;
@@ -26,26 +26,24 @@ export class ProductComponent implements OnInit {
 
   filter = new ProductFilter();
   productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
-
+  productFilter = new ProductFilter();
 
   constructor(private productService: ProductService,
               private toastr: ToastrService) { }
 
   ngOnInit(): void {
 
-    // When the user clicks on the button, scroll to the top of the document
     document.documentElement.scrollTop = 0;
 
     this.listProduct(this.filter);
     
-    //Fetch Data
     this.sortfilter = 'title';
 
   }
 
   listProduct(filter: ProductFilter) {
-    this.productService.getAll(filter).subscribe(response => {
-      this.productsDto = response.data.items;
+    this.productService.getProductsByUser(filter).subscribe(response => {
+      this.products = response.data.items;
     });
   }
 

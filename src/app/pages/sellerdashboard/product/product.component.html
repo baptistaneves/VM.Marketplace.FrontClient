@@ -21,7 +21,7 @@
           <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
             <h2 class="h3 py-2 me-2 text-center text-sm-start">
               Meus produtos
-              <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{productsDto.length}}</span>
+              <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{products.length}}</span>
             </h2>
             <div class="py-2">
               <div class="d-flex flex-nowrap align-items-center pb-3">
@@ -40,40 +40,40 @@
             </div>
           </div>
           <!-- Product -->
-          @for(product of productsDto;track $index){
-          <div class="d-block d-sm-flex align-items-center py-4 border-bottom">
-            <a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" routerLink="/produto/{{product.id}}" style="width: 12.5rem;">
-              <img class="rounded-3" src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product">
-            </a>
-            <div class="text-center text-sm-start">
-              <h3 class="h6 product-title mb-2">
-                <a routerLink="/produto/{{product.id}}">
-                  {{product.name}}
-                </a>
-              </h3>
-              <div class="d-inline-block text-accent price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
-              <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">
-                Visualizações:
-                <span class="fw-medium">5</span>
-              </div>
-               <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2 price">
-                Categória:
-                <span class="fw-medium">{{product.categoryName}}</span>
-              </div>
-              <div class="d-flex justify-content-center justify-content-sm-start pt-3">
-                <!-- <button class="btn bg-faded-accent btn-icon me-2" type="button" data-bs-toggle="tooltip" ngbTooltip="Download">
-                  <i class="ci-download text-accent"></i>
-                </button> -->
-                <a [routerLink]="['/editar-produto', product.id]" routerLinkActive="router-link-active"  class="btn bg-faded-info btn-icon me-2" type="button" data-bs-toggle="tooltip" ngbTooltip="Editar">
-                  <i class="ci-edit text-info"></i>
-                </a>
-                <button class="btn bg-faded-danger btn-icon" type="button" data-bs-toggle="tooltip" ngbTooltip="Remover" (click)="removeproduct(product.id)">
-                  <i class="ci-trash text-danger"></i>
-                </button>
+           <div *ngFor="let product of products">
+            <div class="d-block d-sm-flex align-items-center py-4 border-bottom">
+              <a class="d-block mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" routerLink="/produto/{{product.id}}" style="width: 12.5rem;">
+                <img class="rounded-3" src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product">
+              </a>
+              <div class="text-center text-sm-start">
+                <h3 class="h6 product-title mb-2">
+                  <a routerLink="/produto/{{product.id}}">
+                    {{product.name}}
+                  </a>
+                </h3>
+                <div class="d-inline-block text-accent price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2">
+                  Visualizações:
+                  <span class="fw-medium">5</span>
+                </div>
+                <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2 price">
+                  Categória:
+                  <span class="fw-medium">{{product.categoryName}}</span>
+                </div>
+                <div class="d-flex justify-content-center justify-content-sm-start pt-3">
+                  <!-- <button class="btn bg-faded-accent btn-icon me-2" type="button" data-bs-toggle="tooltip" ngbTooltip="Download">
+                    <i class="ci-download text-accent"></i>
+                  </button> -->
+                  <a [routerLink]="['/editar-produto', product.id]" routerLinkActive="router-link-active"  class="btn bg-faded-info btn-icon me-2" type="button" data-bs-toggle="tooltip" ngbTooltip="Editar">
+                    <i class="ci-edit text-info"></i>
+                  </a>
+                  <button class="btn bg-faded-danger btn-icon" type="button" data-bs-toggle="tooltip" ngbTooltip="Remover" (click)="removeproduct(product.id)">
+                    <i class="ci-trash text-danger"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        }
         </div>
       </section>
     </div>

@@ -17,5 +17,6 @@ export class UserDto {
     createdAt: Date;
     isDeleted: boolean
     isBlocked: boolean;
+    isVerified: boolean;
     businessLicense: string;
 }

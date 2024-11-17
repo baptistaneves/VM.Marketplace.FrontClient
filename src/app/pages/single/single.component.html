@@ -68,7 +68,7 @@
                        
                         <div *ngIf="!showContactInfo" class="bg-secondary rounded p-3 mt-4 mb-2">
                             <ngb-alert [dismissible]="false" type="secondary">
-                                Clica no botão acima para ver contactos do <a href="#" class="alert-link">Vendedor</a>
+                                Clica no botão acima para ver contactos do <strong>Vendedor</strong>
                             </ngb-alert>
                         </div>
                         <div *ngIf="showContactInfo" class="bg-secondary rounded p-3 mt-4 mb-2">
@@ -76,7 +76,11 @@
                                 <!-- <img class="rounded-circle" src="assets/img/testimonials/01.jpg" width="50" alt="Sara Palson"> -->
                                 <div class="ps-2">
                                     <span class="fs-ms text-muted">Publicado por</span>
-                                    <h6 class="fs-sm mb-0">{{product.userFullName}}</h6>
+                                    <h6 class="fs-sm mb-0">
+                                        {{product.userFullName}}
+                                        <span *ngIf="product.isUserVerified" class="badge bg-success rounded-pill badge-shadow py-1"><i class="ci-security-check"></i></span>
+                                        <span *ngIf="!product.isUserVerified" class="badge bg-danger rounded-pill badge-shadow py-1"><i class="ci-security-prohibition"></i></span>
+                                    </h6>
                                 </div>
                             </a>
                         </div>
@@ -277,11 +281,14 @@
                 <div class="text-muted fs-xs me-1">
                 por
                 <a class="product-meta fw-medium" href="javascript:void(0)">
-                    {{product.userFullName}}
+                    {{product.userFullName}} 
+                   
                 </a>
                 em
                 <a class="product-meta fw-medium" href="javascript:void(0)">
                     {{product.categoryName}}
+                    <span *ngIf="product.isUserVerified" class="text-success"><i class="ci-security-check"></i></span>
+                    <span *ngIf="!product.isUserVerified" class="text-danger" style="border-radius: 50px;"><i class="ci-security-prohibition"></i></span>
                 </a>
                 </div>
             </div>

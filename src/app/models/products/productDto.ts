@@ -9,6 +9,7 @@ export class ProductDto {
     promotionalPrice: number;
     isMedicine: boolean;
     expiryDate: Date;
+    isUserVerified: boolean;
     userFullName: string;
     userId: string;
     isActive: boolean;

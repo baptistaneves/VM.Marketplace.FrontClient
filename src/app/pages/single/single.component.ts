@@ -62,6 +62,8 @@ export class SingleComponent implements OnInit {
 
     this.product = this.route.snapshot.data['product'].data;
 
+    console.log(this.product);
+
     config.backdrop = 'static';
 		config.keyboard = false;
     
@@ -166,7 +168,6 @@ export class SingleComponent implements OnInit {
 
     this.productService.getAll(filter).subscribe(response => {
       this.productsDto = response.data.items;
-      console.log(response.data);
     })
   }
 

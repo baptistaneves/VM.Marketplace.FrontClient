@@ -77,7 +77,6 @@ export class SettingComponent implements OnInit {
   getCurrentUserData() {
     this.userService.getCurrentUser()
     .subscribe(user => {
-      console.log(user.data);
       this.userData = user.data;
       this.fillUserForm(user.data);
     }, error => {

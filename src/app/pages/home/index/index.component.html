@@ -54,7 +54,7 @@
                                 <img src="{{ categoryImageUrlStaticFile}}{{category.imageUrl}}"  alt="Product" style="height: 100%;">
                             </div>
                             <div class="card-body">
-                                <h3 class="product-title fs-sm mb-2">
+                                <h3 class="product-title fs-sm mb-2 text-center">
                                     <a routerLink="/categoria/{{category.description}}">{{category.description}}</a>
                                 </h3>
                             </div>
@@ -91,64 +91,9 @@
         <div class="row pt-3 mx-n2">
             <!-- Product -->
             <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
-            <div class="card product-card-alt">
-                <div class="product-thumb" style="height: 200px;">
-                   
-                    <div class="product-card-actions">
-                        <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="Visualizar" routerLink="/produto/{{product.id}}">
-                        <i class="ci-eye"></i>
-                        </a>
-                    </div>
-                    <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
-                    <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
-                </div>
-                <div class="card-body">
-                <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
-                    <div class="text-muted fs-xs me-1">
-                    por
-                    <a class="product-meta fw-medium" href="javascript:void(0)">
-                        {{product.userFullName}}
-                    </a>
-                    em
-                    <a class="product-meta fw-medium" href="javascript:void(0)">
-                        {{product.categoryName}}
-                    </a>
-                    </div>
-                </div>
-                <h3 class="product-title fs-sm mb-2">
-                    <a routerLink="/produto/{{product.id}}">{{product.name}}</a>
-                </h3>
-                <div class="d-flex flex-wrap justify-content-between align-items-center">
-                    <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
-                    <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
-                    
-                    <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
-                        <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
-                            {{ product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
-                          </span>                    
-                        </div>
-                </div>
-                </div>
-            </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- Seller of the month -->
-<section class="border-top py-5">
-    <div class="container py-lg-2">
-        <h2 class="h3 mb-3 pb-3 pb-lg-4 text-center text-lg-start">Novos Lançamentos</h2>
-        <div class="row pt-2 mx-n2">
-            <!-- Product -->
-            <!-- Products grid -->
-            <div class="row pt-3 mx-n2">
-                <!-- Product -->
-                <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
                 <div class="card product-card-alt">
                     <div class="product-thumb" style="height: 200px;">
-                       
+                    
                         <div class="product-card-actions">
                             <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="Visualizar" routerLink="/produto/{{product.id}}">
                             <i class="ci-eye"></i>
@@ -167,6 +112,8 @@
                         em
                         <a class="product-meta fw-medium" href="javascript:void(0)">
                             {{product.categoryName}}
+                            <span *ngIf="product.isUserVerified" class="text-success"><i class="ci-security-check"></i></span>
+                            <span *ngIf="!product.isUserVerified" class="text-danger" style="border-radius: 50px;"><i class="ci-security-prohibition"></i></span>
                         </a>
                         </div>
                     </div>
@@ -180,11 +127,68 @@
                         <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
                             <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
                                 {{ product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
-                              </span>                    
+                            </span>                    
                             </div>
                     </div>
                     </div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Seller of the month -->
+<section class="border-top py-5">
+    <div class="container py-lg-2">
+        <h2 class="h3 mb-3 pb-3 pb-lg-4 text-center text-lg-start">Novos Lançamentos</h2>
+        <div class="row pt-2 mx-n2">
+            <!-- Product -->
+            <!-- Products grid -->
+            <div class="row pt-3 mx-n2">
+                <!-- Product -->
+                <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
+                    <div class="card product-card-alt">
+                        <div class="product-thumb" style="height: 200px;">
+                        
+                            <div class="product-card-actions">
+                                <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="Visualizar" routerLink="/produto/{{product.id}}">
+                                <i class="ci-eye"></i>
+                                </a>
+                            </div>
+                            <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
+                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
+                        </div>
+                        <div class="card-body">
+                        <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
+                            <div class="text-muted fs-xs me-1">
+                            por
+                            <a class="product-meta fw-medium" href="javascript:void(0)">
+                                {{product.userFullName}}
+                            </a>
+                            em
+                            <a class="product-meta fw-medium" href="javascript:void(0)">
+                                {{product.categoryName}}
+                                <span *ngIf="product.isUserVerified" class="text-success"><i class="ci-security-check"></i></span>
+                                <span *ngIf="!product.isUserVerified" class="text-danger" style="border-radius: 50px;"><i class="ci-security-prohibition"></i></span>
+                            </a>
+                            </div>
+                        </div>
+                        <h3 class="product-title fs-sm mb-2">
+                            <a routerLink="/produto/{{product.id}}">{{product.name}}</a>
+                        </h3>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                            <div *ngIf="product.promotionalPrice <= 0" class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                            <div *ngIf="product.promotionalPrice" class="fs-xs me-1 text-accent rounded-1 py-1 px-2 price" style="text-decoration:line-through;">{{product.price.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small></div>
+                            
+                            <div *ngIf="product.promotionalPrice" class="fs-sm me-2">
+                                <span class="bg-faded-accent text-accent rounded-1 py-1 px-2 price">
+                                    {{ product.promotionalPrice.toFixed(2).replace('.', ',') | mask: 'separator.2' }} <small>Kz</small>
+                                </span>                    
+                                </div>
+                        </div>
+                        </div>
+                    </div>
                 </div>
     
             </div>
