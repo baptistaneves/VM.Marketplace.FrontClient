@@ -25,6 +25,8 @@ export class ProductService extends BaseService {
   
     params = params.append('category', filter.category);
     params = params.append('searchTerm', filter.searchTerm);
+    params = params.append('filterByHighPrice', filter.filterByHighPrice);
+    params = params.append('filterByLowPrice', filter.filterByLowPrice);
     
     return this.http
       .get<any>(
@@ -58,9 +60,9 @@ export class ProductService extends BaseService {
       .pipe(catchError(super.serviceError));
   }
 
-  add(product: FormData) : Observable<any>{
+  add(product: CreateProductRequest) : Observable<any>{
     let response = this.http
-        .post<FormData>(this.UrlServiceV1 + "products/adicionar-produto", product, this.GetHeaderFormData())
+        .post<any>(this.UrlServiceV1 + "products/adicionar-produto", product, this.GetHeaderFormData())
         .pipe((
           map(this.extractData),
           catchError(this.serviceError)));
@@ -68,9 +70,9 @@ export class ProductService extends BaseService {
     return response;
   }
 
-  update(product: FormData) : Observable<any>{
+  update(product: UpdateProductRequest) : Observable<any>{
     let response = this.http
-        .put<FormData>(this.UrlServiceV1 + "products/actualizar-produto", product, this.GetHeaderFormData())
+        .put<any>(this.UrlServiceV1 + "products/actualizar-produto", product, this.GetHeaderFormData())
         .pipe((
           map(this.extractData),
           catchError(this.serviceError)));

@@ -8,6 +8,7 @@ import { ProductDto } from 'src/app/models/products/productDto';
 import { ToastrService } from 'ngx-toastr';
 import { ProductFilter } from 'src/app/models/products/productFilter';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -28,6 +29,11 @@ export class ProductComponent implements OnInit {
   productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
   productFilter = new ProductFilter();
 
+  queryFilter:string;
+
+  pagination: any;
+  private _total$ = new BehaviorSubject<number>(0);
+
   constructor(private productService: ProductService,
               private toastr: ToastrService) { }
 
@@ -42,10 +48,15 @@ export class ProductComponent implements OnInit {
   }
 
   listProduct(filter: ProductFilter) {
+    this.filter.pageSize = 4;
     this.productService.getProductsByUser(filter).subscribe(response => {
       this.products = response.data.items;
+      this.pagination = response.data;
+      this._total$.next(response.data.totalItems);
     });
   }
+
+  get total$() { return this._total$.asObservable(); }
 
   removeProduct(id:string) {
     this.productService.remove(id)  .subscribe(
@@ -94,9 +105,20 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  // Sort
+  onKeyUp(event:Event) {
+    this.filter.searchTerm = this.queryFilter;
+    this.listProduct(this.filter);
+  }
+
   filtering() {
-    
+
+  }
+
+  paginate(pageNumber: number) {
+    if(!Number.isNaN(pageNumber)) {
+      this.filter.pageNumber = pageNumber;
+      this.listProduct(this.filter);
+    }
   }
 
 }

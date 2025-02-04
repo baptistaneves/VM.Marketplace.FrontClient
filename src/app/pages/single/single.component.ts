@@ -62,8 +62,6 @@ export class SingleComponent implements OnInit {
 
     this.product = this.route.snapshot.data['product'].data;
 
-    console.log(this.product);
-
     config.backdrop = 'static';
 		config.keyboard = false;
     

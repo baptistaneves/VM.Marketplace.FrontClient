@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbTooltipModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltipModule, NgbCollapseModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //routing
@@ -39,6 +39,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
     SharedModule,
     NgbTooltipModule,
     NgbCollapseModule,
+    NgbPaginationModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

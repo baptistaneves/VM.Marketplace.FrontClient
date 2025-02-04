@@ -55,7 +55,7 @@
               </label>
               <select class="form-select me-2" id="unp-category" 
                 formControlName="categoryId" [ngClass]="{ 'is-invalid': form['categoryId'].errors && form['categoryId'].touched }">
-                <option selected>Seleccione a categória</option>
+                <option value="" selected disabled>Seleccione a categoria</option>
                 <option *ngFor="let category of categories" [value]="category.id">{{category.description}}</option>
               </select>
               <div *ngIf="form['categoryId'].errors && form['categoryId'].touched" class="text-danger">
@@ -63,20 +63,66 @@
               </div> 
             </div>
 
-            <ngx-dropzone (change)="onSelect($event)">
-              <ngx-dropzone-label><i class="display-4 text-muted bx bxs-cloud-upload"></i>
-                <h4>Arraste ou clique aqui para enviar a imagem do produto</h4>
-              </ngx-dropzone-label>
-              @for(f of files;track $index){
-              <ngx-dropzone-preview [removable]="true" (removed)="onRemove(f)">
-                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-              </ngx-dropzone-preview>
-            }
-            </ngx-dropzone> 
+            <div class="mb-3 pb-2">
+              <label class="form-label">Foto Principal*</label>
+              <!-- Drag and drop file upload -->
+              <div class="file-drop-area">
+                <div *ngIf="imageSrc" class="file-drop-preview img-thumbnail rounded">
+                  <!-- Exibir a imagem aqui -->
+                  <img [src]="imageSrc"  alt="Imagem selecionada" style="width: 50%; height: auto;"/>
+                </div>
+                <span class="file-drop-message">Arraste e solte ou clique aqui para fazer o upload da foto principal</span>
+                <input type="file" class="file-drop-input" (change)="onFileSelect($event)">
+              </div>
+            </div>
+
+            <div class="row mb-3 pb-2">
+              <div class="col-4">
+                <div class="file-drop-area">
+                  <div *ngIf="imagesSrc[0]" class="file-drop-preview img-thumbnail rounded">
+                    <!-- Exibir a imagem aqui -->
+                    <img [src]="imagesSrc[0]"  alt="Imagem selecionada" style="width: 50%; height: auto;"/>
+                  </div>
+                  <span class="file-drop-message">Adicionar foto</span>
+                  <input type="file" class="file-drop-input" (change)="onImagesSelect($event, 0)">
+                  <button *ngIf="imagesSrc[0]" (click)="removeFile(0)" type="button" class="btn btn-outline-danger btn-icon">
+                    <i class="ci-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="file-drop-area">
+                  <div *ngIf="imagesSrc[1]" class="file-drop-preview img-thumbnail rounded">
+                    <!-- Exibir a imagem aqui -->
+                    <img [src]="imagesSrc[1]"  alt="Imagem selecionada" style="width: 50%; height: auto;"/>
+                  </div>
+                  <span class="file-drop-message">Adicionar foto</span>
+                  <input type="file" class="file-drop-input" (change)="onImagesSelect($event, 1)">
+                  <button *ngIf="imagesSrc[1]" (click)="removeFile(1)" type="button" class="btn btn-outline-danger btn-icon">
+                    <i class="ci-trash"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="file-drop-area">
+                  <div *ngIf="imagesSrc[2]" class="file-drop-preview img-thumbnail rounded">
+                    <!-- Exibir a imagem aqui -->
+                    <img [src]="imagesSrc[2]"  alt="Imagem selecionada" style="width: 50%; height: auto;"/>
+                  </div>
+                  <span class="file-drop-message">Adicionar foto</span>
+                  <input type="file" class="file-drop-input" (change)="onImagesSelect($event, 2)">
+                  <button *ngIf="imagesSrc[2]" (click)="removeFile(2)" type="button" class="btn btn-outline-danger btn-icon">
+                    <i class="ci-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div class="mb-3 mt-3 py-2">
               <label class="form-label" for="unp-product-description">
-                Descrição do produto*
+                Descrição do Produto*
               </label>
               <div class="NgxEditor__Wrapper">
                 <ngx-editor-menu [editor]="descriptionEditor" [toolbar]="toolbar"> </ngx-editor-menu>
@@ -84,7 +130,7 @@
                 [editor]="descriptionEditor" 
                 formControlName="description"
                 [ngClass]="{ 'is-invalid': form['description'].errors && form['description'].touched }"
-                [placeholder]="'Descrição do produto'"> </ngx-editor>
+                [placeholder]="'Descrição do Produto'"> </ngx-editor>
               </div>
               <div *ngIf="form['description'].errors && form['description'].touched" class="text-danger">
                 <div *ngIf="form['description'].errors['required']">Por favor, forneça mais detalhes sobre o produto</div>

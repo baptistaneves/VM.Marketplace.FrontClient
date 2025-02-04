@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 //Data Get
 import { product } from './data';
@@ -40,6 +40,9 @@ export class CategoryComponent implements OnInit {
 
   productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
 
+  pagination: any;
+  private _total$ = new BehaviorSubject<number>(0);
+  
   constructor(public service: CategoryService,
               private route: ActivatedRoute,
               private productService: ProductService
@@ -74,37 +77,19 @@ export class CategoryComponent implements OnInit {
       { label: 'Categorias' },
       { label: this.categoryDescription, active: true }
     ];
-
-    /**
-    * fetches data
-    */
-    setTimeout(() => {
-      this.CategoryList.subscribe(x => {
-        this.products = Object.assign([], x);
-      });
-      document.getElementById('elmLoader')?.classList.add('d-none')
-    }, 1200)
-
-   // set decimal point to small and adjust to Angolan Kwanza format
-    setTimeout(() => {
-      document.querySelectorAll(".price").forEach((e) => {
-        let txt = e.innerHTML.split(".")
-        let wholePart = txt[0];
-        let decimalPart = txt.length > 1 ? txt[1] : '00'; // handling cases where there might be no decimal part
-        // Format the number with commas for thousand separators
-        wholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        // Combine whole part and decimal part with Angolan Kwanza symbol
-        e.innerHTML = wholePart + ",<small>" + decimalPart + "</small> Kz";
-      });
-    }, 0);
-    
   }
 
   listProducts(filter: ProductFilter) {
     this.productService.getAll(filter).subscribe(response => {
       this.productsDto = response.data.items;
+      this.pagination = response.data;
+      this._total$.next(response.data.totalItems);
+      filter.filterByHighPrice = false;
+      filter.filterByLowPrice = false;
     })
   }
+
+  get total$() { return this._total$.asObservable(); }
 
   onInputChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
@@ -117,25 +102,25 @@ export class CategoryComponent implements OnInit {
 
   //filter dropdown
   Changecategory(item: any, icon: any, property: any) {
-    this.selectedCategory = item
-    this.itemicon = icon
-    this.isDesc = !this.isDesc; //change the direction 
-    let direction = this.isDesc ? 1 : -1;
-    this.service.products.sort((a: any, b: any) => {
-      if (a[property] < b[property]) {
-        return -1 * direction;
-      }
-      else if (a[property] > b[property]) {
-        return 1 * direction;
-      }
-      else {
-        return 0;
-      }
-    });
+    this.selectedCategory = item;
   }
 
-  //add to cart 
-  addcart(id: any) {
-    cart.push(this.products[id])
+  paginate(pageNumber: number) {
+    if(!Number.isNaN(pageNumber)) {
+      this.productFilter.pageNumber = pageNumber;
+      this.listProducts(this.productFilter)
+    }
+  }
+
+  ByLowPrice(item: any) {
+    this.selectedCategory = item;
+    this.productFilter.filterByLowPrice = true;
+    this.listProducts(this.productFilter)
+  }
+
+  ByHighPrice(item: any) {
+    this.selectedCategory = item;
+    this.productFilter.filterByHighPrice = true;
+    this.listProducts(this.productFilter)
   }
 }

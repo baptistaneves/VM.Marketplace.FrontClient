@@ -165,7 +165,7 @@ const service = [
     {
         id: '3',
         image: 'assets/img/marketplace/features/updates.png',
-        title: 'Fornecedores Confiaveis',
+        title: 'Fornecedores Confiáveis',
         sub_title: 'Fornecedores verificados'
     },
     {

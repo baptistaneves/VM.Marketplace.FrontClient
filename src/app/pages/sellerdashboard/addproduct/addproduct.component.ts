@@ -8,6 +8,7 @@ import { ProductService } from 'src/app/services/products/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Editor, Toolbar } from 'ngx-editor';
+import { ImageFile } from 'src/app/models/products/ImageFile';
 
 @Component({
   selector: 'app-addproduct',
@@ -22,6 +23,7 @@ export class AddproductComponent implements OnInit {
 
   categories: any;
   errors: any = [];
+  fileImages: ImageFile[] = [];
   createProductModel: CreateProductRequest = new CreateProductRequest();
 
   imagemForm: any;
@@ -39,6 +41,10 @@ export class AddproductComponent implements OnInit {
     ['text_color', 'background_color'],
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
+
+  imageSrc: string | ArrayBuffer | null = null;
+
+  imagesSrc: string[] = [null, null, null];
 
   constructor(private formBuilder: FormBuilder,
               private categoryService: CategoryService,
@@ -96,43 +102,77 @@ export class AddproductComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  /**
-   * Save product
-   */
+  files: File[] = [];
+
   AddProduct() {
     if (this.productForm.dirty && this.productForm.valid) {
       this.createProductModel = Object.assign({}, this.createProductModel, this.productForm.value);
 
-      let formdata = new FormData();
-  
-      formdata.append('product', JSON.stringify(this.createProductModel));
-
-      if(this.imagemForm && this.imagemNome) {
-        formdata.append('imageFile', this.imagemForm, this.imagemNome);
+      if(this.fileImages.length > 0) {
+        this.createProductModel.fileImages = this.fileImages;
       }
 
-       this.productService.add(formdata)
-       .subscribe(
-           response => {
-             this.handleSuccess(response);
-           },
-           error => {this.handleFailure(error)}
-       );
+      this.productService.add(this.createProductModel)
+      .subscribe(
+            response => {
+              this.handleSuccess(response);
+            },
+            error => {this.handleFailure(error)}
+      );
 
     }
   }
 
-  files: File[] = [];
+  onFileSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null;
+    if (file) {
+      
+      this.createProductModel.fileName =  file.name;
 
-  onSelect(event: any) {
-    this.files.push(...event.addedFiles);
-
-    this.imagemForm =  this.files[0];
-    this.imagemNome =  this.files[0].name;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.createProductModel.base64 = reader.result?.toString().split(',')[1] || null;
+        this.imageSrc = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
-  onRemove(event: any) {
-    this.files.splice(this.files.indexOf(event), 1);
+  onImagesSelect(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.addImageToFileList(reader, file.name, index);
+        this.imagesSrc[index] = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  addImageToFileList(reader: FileReader, name: string, ind: any) {
+    if (!this.fileImages.some(x => x.fileName === name)) {
+
+      let newFileImage = new ImageFile(
+        reader.result?.toString().split(',')[1] || null,
+        name,
+        ind
+      );
+
+      this.fileImages.push(newFileImage);
+
+    } else {
+      console.log('Arquivo já existe na lista:', name);
+    }
+  }
+  
+
+  removeFile(index: any) {
+    this.imagesSrc[index] = null;
+    this.fileImages = this.fileImages.filter(fileImage => fileImage.index !== index);
   }
 
   handleSuccess(response: any) {

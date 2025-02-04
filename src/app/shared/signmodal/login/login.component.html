@@ -1,0 +1,70 @@
+<!-- Sign in / sign up modal-->
+<!-- <ng-template role="document" let-modal> -->
+    <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item" [ngbNavItem]="1">
+              <a ngbNavLink class="nav-link fw-medium" href="javascript:void(0);" data-bs-toggle="tab" role="tab"
+                aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Login</a>
+              <ng-template ngbNavContent>
+    
+                <form (ngSubmit)="signin()" [formGroup]="loginForm" class="needs-validation tab-pane fade show" id="signin-tab">
+
+                  <div class="col-12">    
+                    <ul *ngIf="errors && errors.length > 0" class="alert alert-danger p-4">
+                        <li *ngFor="let error of errors">{{ error }}</li>
+                    </ul>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label" for="si-email">E-mail</label>
+                    <input 
+                    class="form-control" 
+                    type="email"
+                    placeholder="ana@exemplo.com"
+                    formControlName="email" 
+                    [ngClass]="{ 'is-invalid': form['email'].errors && form['email'].touched }">
+                    <div *ngIf="form['email'].errors && form['email'].touched" class="text-danger">
+                        <div *ngIf="form['email'].errors['required']">Por favor, informe o e-mail do utilizador</div>
+                    </div> 
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="si-password">Senha</label>
+                    <div class="password-toggle">
+                      <input 
+                      class="form-control" 
+                      [type]="fieldTextType ? 'text' : 'password'" 
+                      formControlName="password" 
+                      [ngClass]="{ 'is-invalid': form['password'].errors && form['password'].touched }">
+                      <div *ngIf="form['password'].errors && form['password'].touched" class="text-danger">
+                        <div *ngIf="form['password'].errors['required']">Por favor, informe a senha do utilizador</div>
+                    </div> 
+                      
+                      <label class="password-toggle-btn" aria-label="Show/hide password">
+                        <!-- <i class="mdi mdi-eye"></i> -->
+                        <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"
+                          [ngClass]="fieldTextType ? 'mdi-eye-off-outline':'mdi-eye-off-outline'"
+                          (click)="toggleFieldTextType()"></span>
+                      </label>
+                    </div>
+    
+                  </div>
+                  <div class="mb-3 d-flex flex-wrap justify-content-between">
+                    <div class="form-check mb-2">
+                      <input class="form-check-input" type="checkbox" id="si-remember">
+                      <label class="form-check-label" for="si-remember">Lembrar-me</label>
+                    </div><a class="fs-sm" href="javascript:void(0);">Esqueci minha senha</a>
+                  </div>
+                  <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Entrar</button>
+                </form>
+              </ng-template>
+            </li>
+          </ul>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close" (click)="closemodal()"></button>
+        </div>
+        <div class="modal-body tab-content py-4">
+          <div [ngbNavOutlet]="nav"></div>
+        </div>
+      </div>
+    <!-- </ng-template> -->
+  

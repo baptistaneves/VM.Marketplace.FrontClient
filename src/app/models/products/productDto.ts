@@ -1,3 +1,5 @@
+import { ImageFile } from "./ImageFile";
+
 export class ProductDto {
     id: string;
     categoryId: string;
@@ -18,4 +20,5 @@ export class ProductDto {
     phoneNumber: string;
     email:string;
     address: string;
+    fileImages: ImageFile[] = [];
 }

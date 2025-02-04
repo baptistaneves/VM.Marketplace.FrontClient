@@ -5,7 +5,7 @@ import { Editor, Toolbar } from 'ngx-editor';
 
 import { Lightbox } from 'ngx-lightbox';
 import { ToastrService } from 'ngx-toastr';
-import { CreateProductRequest } from 'src/app/models/products/createProductRequest';
+import { ImageFile } from 'src/app/models/products/ImageFile';
 import { ProductDto } from 'src/app/models/products/productDto';
 import { UpdateProductRequest } from 'src/app/models/products/updateProductRequest';
 import { CategoryService } from 'src/app/services/categories/category.service';
@@ -46,6 +46,11 @@ export class EditproductComponent implements OnInit{
     ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
 
+  imageSrc: string | ArrayBuffer | null = null;
+
+  imagesSrc: string[] = [null, null, null];
+  fileImages: ImageFile[] = [];
+
   constructor(private lightbox: Lightbox,
               private formBuilder: FormBuilder,
               private categoryService: CategoryService,
@@ -65,12 +70,9 @@ export class EditproductComponent implements OnInit{
     this.descriptionEditor = new Editor();
     this.especificationEditor = new Editor();
 
-    /**
-    * BreadCrumb
-    */
     this.breadCrumbItems = [
       { label: 'Inicio', link: '/' },
-      { label: 'Produtos', link: '/product' },
+      { label: 'Produtos', link: '/produtos' },
       { label: 'Editar Produto', active: true }
     ];
 
@@ -132,31 +134,22 @@ export class EditproductComponent implements OnInit{
     });
   }
 
-
   get form() {
     return this.productForm.controls;
   }
 
-  /**
-   * Save product
-   */
   UpdateProduct() {
-    if (this.productForm.dirty && this.productForm.valid) {
+    if (this.productForm.valid) {
 
       this.updateProductModel = Object.assign({}, this.updateProductModel, this.productForm.value);
       this.updateProductModel.id = this.product.id;
       this.updateProductModel.mainPhoto = this.product.mainPhoto;
    
-       let formdata = new FormData();
-  
-       formdata.append('product', JSON.stringify(this.updateProductModel));
+      if(this.fileImages.length > 0) {
+        this.updateProductModel.fileImages = this.fileImages;
+      }
 
-       if(this.imagemForm && this.imagemNome) {
-         formdata.append('imageFile', this.imagemForm, this.imagemNome);
-       }
-
-      
-       this.productService.update(formdata)
+       this.productService.update(this.updateProductModel)
        .subscribe(
            response => {
              this.handleSuccess(response);
@@ -164,6 +157,69 @@ export class EditproductComponent implements OnInit{
            error => {this.handleFailure(error)}
        );
 
+    }
+  }
+  
+  onFileSelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null;
+    if (file) {
+      
+      this.updateProductModel.fileName =  file.name;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.updateProductModel.base64 = reader.result?.toString().split(',')[1] || null;
+        this.imageSrc = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeExistingFile(fileName: string) {
+    this.product.fileImages =this.product.fileImages.filter(fileImage => fileImage.fileName !== fileName);
+    
+    let newFileImage = new ImageFile(
+      null,
+      fileName,
+      0
+    );
+
+    this.fileImages.push(newFileImage);
+  }
+
+  removeFile(index: any) {
+    this.imagesSrc[index] = null;
+    this.fileImages = this.fileImages.filter(fileImage => fileImage.index !== index);
+  }
+
+  onImagesSelect(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null;
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.addImageToFileList(reader, file.name, index);
+        this.imagesSrc[index] = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  addImageToFileList(reader: FileReader, name: string, ind: any) {
+    if (!this.fileImages.some(x => x.fileName === name)) {
+
+      let newFileImage = new ImageFile(
+        reader.result?.toString().split(',')[1] || null,
+        name,
+        ind
+      );
+
+      this.fileImages.push(newFileImage);
+
+    } else {
+      console.log('Arquivo já existe na lista:', name);
     }
   }
 
@@ -194,7 +250,6 @@ export class EditproductComponent implements OnInit{
   }
 
   handleSuccess(response: any) {
-    this.productForm.reset();
     this.errors = [];
 
     this.router.navigate(['/product']);

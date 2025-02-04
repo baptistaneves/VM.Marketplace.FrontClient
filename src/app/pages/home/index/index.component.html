@@ -73,14 +73,11 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
         <h2 class="h3 mb-0 pt-3 me-2">Destaques no Mercado de Saúde</h2>
         <div class="pt-3">
-            <select class="form-select me-2">
-                <option>Todas categorias</option>
-                <option>Photos</option>
-                <option>Graphics</option>
-                <option>UI Design</option>
-                <option>Web Themes</option>
-                <option>Fonts</option>
-                <option>Add-Ons</option>
+            <select class="form-select me-2" [(ngModel)]="selectedCategory" (change)="listProductsByCategory(selectedCategory)">
+                <option value="" disabled>Todas categorias</option>
+                <option *ngFor="let category of categories" [value]="category.description">
+                    {{category.description}}
+                </option>
             </select>
         </div>
     </div>
@@ -92,7 +89,7 @@
             <!-- Product -->
             <div class="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter" *ngFor="let product of productsDto">
                 <div class="card product-card-alt">
-                    <div class="product-thumb" style="height: 200px;">
+                    <div class="product-thumb">
                     
                         <div class="product-card-actions">
                             <a class="btn btn-light btn-icon btn-shadow fs-base mx-2" ngbTooltip="Visualizar" routerLink="/produto/{{product.id}}">
@@ -100,7 +97,7 @@
                             </a>
                         </div>
                         <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
-                        <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
+                        <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="{{product.name}}" style="width: 100%; height: 200px;  object-fit: cover;">
                     </div>
                     <div class="card-body">
                     <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">
@@ -157,7 +154,7 @@
                                 </a>
                             </div>
                             <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
-                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
+                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="{{product.name}}" style="width: 100%; height: 200px;  object-fit: cover;">
                         </div>
                         <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">

@@ -16,9 +16,17 @@
                     <!-- Product gallery -->
                     <div class="gallery">
                         <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(0)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;Simple iPhone X Mockups&lt;/h6&gt;">
-                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Gallery preview" style="height: 400px;">
+                            <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="{{product.name}}" style="width: 100%; height: 400px;  object-fit: cover;">
                             <span class="gallery-item-caption">{{product.name}}</span>
                         </a>
+                        <div class="row" *ngIf="product.fileImages != null">
+                            <div class="col-sm-6" *ngFor="let fileImage of product.fileImages">
+                                <a class="gallery-item rounded-3 mb-grid-gutter" href="javascript:void(0);" (click)="openImage(1)" data-sub-html="&lt;h6 class=&quot;fs-sm text-light&quot;&gt;UI Psd iPhone X Monochrome&lt;/h6&gt;">
+                                    <img src="{{productImageUrlStaticFile}}{{fileImage.fileName}}" style="width: 100%; height: 200px;  object-fit: cover;" alt="{{product.name}}">
+                                    <span class="gallery-item-caption">{{product.name}}</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -78,8 +86,8 @@
                                     <span class="fs-ms text-muted">Publicado por</span>
                                     <h6 class="fs-sm mb-0">
                                         {{product.userFullName}}
-                                        <span *ngIf="product.isUserVerified" class="badge bg-success rounded-pill badge-shadow py-1"><i class="ci-security-check"></i></span>
-                                        <span *ngIf="!product.isUserVerified" class="badge bg-danger rounded-pill badge-shadow py-1"><i class="ci-security-prohibition"></i></span>
+                                        <span *ngIf="product.isUserVerified" class="text-success rounded-pill badge-shadow py-1"><i class="ci-security-check"></i></span>
+                                        <span *ngIf="!product.isUserVerified" class="text-danger rounded-pill badge-shadow py-1"><strong><i class="ci-security-prohibition"></i></strong></span>
                                     </h6>
                                 </div>
                             </a>
@@ -100,7 +108,7 @@
                         <ul class="list-unstyled fs-sm mt-3">
                             <li class="d-flex justify-content-between mb-3 pb-3 border-bottom">
                                 <span class="text-dark fw-medium">Categoria</span>
-                                <a class="product-meta" routerLink="categoria/{{product.categoryName}}">
+                                <a class="product-meta" routerLink="/categoria/{{product.categoryName}}">
                                     {{product.categoryName}}
                                 </a>
                             </li>
@@ -274,7 +282,7 @@
                     </a>
                 </div>
                 <a class="product-thumb-overlay" routerLink="/produto/{{product.id}}"></a>
-                <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="Product" style="height: 100%;">
+                <img src="{{productImageUrlStaticFile}}{{product.mainPhoto}}" alt="{{product.name}}" style="width: 100%; height: 200px;  object-fit: cover;">
             </div>
             <div class="card-body">
             <div class="d-flex flex-wrap justify-content-between align-items-start pb-2">

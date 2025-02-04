@@ -15,6 +15,7 @@ import { AccountBreadcrumbsComponent } from './account-breadcrumbs/account-bread
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { SignmodalComponent } from './signmodal/signmodal.component';
 import { CurrencyAoaPipe } from './pipes/currency-aoa.pipe';
+import { LoginComponent } from './signmodal/login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CurrencyAoaPipe } from './pipes/currency-aoa.pipe';
     FooterComponent,
     BreadcrumbsComponent,
     AccountBreadcrumbsComponent,
-    SidemenuComponent
+    SidemenuComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

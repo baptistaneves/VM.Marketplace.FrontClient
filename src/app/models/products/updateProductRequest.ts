@@ -1,3 +1,4 @@
+import { ImageFile } from "./ImageFile";
 
 export class UpdateProductRequest {
     id: string;
@@ -10,4 +11,7 @@ export class UpdateProductRequest {
     promotionalPrice: number;
     isMedicine: boolean;
     expiryDate: Date;
+    fileName: string;
+    base64: string;
+    fileImages: ImageFile[];
 }

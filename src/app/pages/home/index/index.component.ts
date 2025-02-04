@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 
 // Data Get
-import { feature, seller, service, blog, recent } from './data';
-import { cart } from '../../cart/data';
-import { favorites } from '../../account/favorites/data';
+import { service } from './data';
 import { CategoryService } from 'src/app/services/categories/category.service';
 import { Category } from 'src/app/models/categories/category';
 import { environment } from 'src/environments/environment';
@@ -23,12 +21,15 @@ import { ProductFilter } from 'src/app/models/products/productFilter';
 export class IndexComponent implements OnInit {
   services: any;
 
-  categories: Category[];
+  categories: Category[] = [];
   productsDto: ProductDto[];
   productFilter = new ProductFilter();
 
   categoryImageUrlStaticFile: string = environment.apiUrlCategoryStaticFilesv1;
   productImageUrlStaticFile: string = environment.apiUrlProductStaticFilesv1;
+
+  selectedCategory: string = "";
+  categoryPlaceholder = "Todas categorias";
 
   constructor(public router: Router,
               private categoryService: CategoryService,
@@ -37,7 +38,6 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // When the user clicks on the button, scroll to the top of the document
     document.documentElement.scrollTop = 0;
 
     this.services = service;
@@ -55,6 +55,14 @@ export class IndexComponent implements OnInit {
   listCategories() {
     this.categoryService.getAll().subscribe(response => {
       this.categories = response.data;
+    })
+  }
+
+  listProductsByCategory(category: string) {
+    this.productFilter.category = category;
+    console.log(category);
+    this.productService.getAll(this.productFilter).subscribe(response => {
+      this.productsDto = response.data.items;
     })
   }
 

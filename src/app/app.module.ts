@@ -19,6 +19,7 @@ import { ProductByCategoryResolver } from './services/products/productByCategory
 import { CommentService } from './services/comments/comment.service';
 import { CurrencyPipe } from '@angular/common';
 import { IConfig, NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
+import { ProductTrackingService } from './services/products/product-tracking.service';
 
 const maskConfig: Partial<IConfig> = {
   dropSpecialCharacters: false,
@@ -47,6 +48,7 @@ const maskConfig: Partial<IConfig> = {
     CityService,
     CategoryService,
     ProductService,
+    ProductTrackingService,
     CommentService,
     ProductResolver,
     ProductByCategoryResolver,

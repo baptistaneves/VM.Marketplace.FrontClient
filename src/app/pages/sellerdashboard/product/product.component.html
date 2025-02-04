@@ -20,22 +20,20 @@
           <!-- Title -->
           <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
             <h2 class="h3 py-2 me-2 text-center text-sm-start">
-              Meus produtos
+              Meus Produtos
               <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{products.length}}</span>
             </h2>
             <div class="py-2">
               <div class="d-flex flex-nowrap align-items-center pb-3">
-                <label class="form-label fw-normal text-nowrap mb-0 me-2" for="sorting">
-                  Ordenar por:
-                </label>
-                <select class="form-select form-select-sm me-2" id="sorting" [(ngModel)]="sortfilter" (change)="filtering()">
-                  <option value="title">Date de Criação</option>
-                  <option value="title">Nome do Produto</option>
-                  <option value="price">Preço</option>
-                </select>
-                <button class="btn btn-outline-secondary btn-sm px-2" type="button">
-                  <i class="ci-arrow-up"></i>
-                </button>
+                <div class="input-group">
+                  <i class="ci-search position-absolute top-50 start-0 translate-middle-y text-muted fs-base ms-3"></i>
+                  <input 
+                  class="form-control rounded-star"
+                  type="text" 
+                  placeholder="Pesquisar..."
+                  (keyup)="onKeyUp($event)"
+                  [(ngModel)]="queryFilter">
+                </div>
               </div>
             </div>
           </div>
@@ -57,7 +55,7 @@
                   <span class="fw-medium">5</span>
                 </div>
                 <div class="d-inline-block text-muted fs-ms border-start ms-2 ps-2 price">
-                  Categória:
+                  Categoria:
                   <span class="fw-medium">{{product.categoryName}}</span>
                 </div>
                 <div class="d-flex justify-content-center justify-content-sm-start pt-3">
@@ -72,6 +70,22 @@
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row my-4" *ngIf="pagination != null">
+            <div class="col-12">
+              <ngb-pagination class="d-flex justify-content-center pt-2"
+               [collectionSize]="(total$ | async)!" [(page)]="pagination.page" [pageSize]="pagination.pageSize" aria-label="Custom pagination"
+               (pageChange)="paginate(pagination.page)">
+                <ng-template ngbPaginationPrevious let-page let-pages="pages">
+                  <i class="ci-arrow-left me-2"></i>
+                  Anterior
+                </ng-template>
+                <ng-template ngbPaginationNext>
+                  Próximo
+                  <i class="ci-arrow-right ms-2"></i>
+                </ng-template>
+              </ngb-pagination>
             </div>
           </div>
         </div>

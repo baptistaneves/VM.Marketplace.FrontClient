@@ -7,6 +7,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { SignmodalComponent } from '../signmodal/signmodal.component';
 import { LocalStorageUtils } from 'src/app/utils/localStorageUtils';
 import { Router } from '@angular/router';
+import { LoginComponent } from '../signmodal/login/login.component';
+import { Category } from 'src/app/models/categories/category';
+import { CategoryService } from 'src/app/services/categories/category.service';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +22,7 @@ export class HeaderComponent implements OnInit {
   
   public isCollapsed = true;
   cartproduct: any;
-  allcategories: any;
+  categories: Category[] = [];
 
   loginPassfield!: boolean;
 
@@ -39,15 +42,14 @@ export class HeaderComponent implements OnInit {
   constructor(
     private modalService: NgbModal, 
     private formBuilder: UntypedFormBuilder,
+    private categoryService: CategoryService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.setDataToInputFilter();
     this.loggedInUser = this.LocalStorage.getUser();
 
-    this.allcategories = category;
-    this.cartproduct = cart;
-
+    this.listCategories();
     /**
      * Form Validatyion
      */
@@ -66,7 +68,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  
+  listCategories() {
+    this.categoryService.getAll().subscribe(response => {
+      this.categories = response.data;
+    })
+  }
+
   setDataToInputFilter() {
     const storedValue =  this.LocalStorage.getFilterData();
     if (storedValue) {
@@ -145,14 +152,14 @@ export class HeaderComponent implements OnInit {
     * Open modal
     */
   openModal() {
-    // this.submitted = false;
     this.modalService.open(SignmodalComponent, { size: 'md', centered: true });
   }
 
-  onKeyUp(event: KeyboardEvent): void {
-    const target = event.target as HTMLInputElement;
-    this.queryFilter = target.value; 
+  openLoginModal() {
+    this.modalService.open(LoginComponent, { size: 'md', centered: true });
+  }
 
+  search(): void {
     if (this.queryFilter.trim() === '')   {
       this.LocalStorage.removeFilterData();
     } 
@@ -164,6 +171,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch(): void  {
+    console.log(this.queryFilter);
       this.router.navigate(['/pesquisar',this.queryFilter]);
   }
 
