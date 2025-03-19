@@ -17,6 +17,12 @@ export class UserService extends BaseService {
           .pipe(catchError(super.serviceError));
   }
 
+  getProvidersQuantity() : Observable<any>{
+    return this.http
+          .get<any>(this.UrlServiceV1 + "users/obter-quantidade-de-fornecedores/", this.GetAuthHeaderJson())
+          .pipe(catchError(super.serviceError));
+  }
+
   getCurrentUser() : Observable<any>{
     return this.http
           .get<any>(this.UrlServiceV1 + "users/obter-dados-do-usuario-logado", this.GetAuthHeaderJson())

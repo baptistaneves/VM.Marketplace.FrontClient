@@ -60,6 +60,12 @@ export class ProductService extends BaseService {
       .pipe(catchError(super.serviceError));
   }
 
+  getProductsQuantity() : Observable<any>{
+    return this.http
+          .get<any>(this.UrlServiceV1 + "products/obter-quantidade-de-produtos/", this.GetAuthHeaderJson())
+          .pipe(catchError(super.serviceError));
+  }
+
   add(product: CreateProductRequest) : Observable<any>{
     let response = this.http
         .post<any>(this.UrlServiceV1 + "products/adicionar-produto", product, this.GetHeaderFormData())
